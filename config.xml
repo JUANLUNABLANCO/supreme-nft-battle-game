@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmls = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http:phonegap.com/ns/1.0"
+        id= "com.phonegup.example"
+        versionCode = "1"
+        version= "1.0.0" >
+        <name>Supreme Battle</name>
+        <description>
+            A version Beta of Supreme Battle
+        </description>
+        <author href="https://juanlunablanco.github.io/portfolio/" email="desarrolloaplicacionesweb.jmlb@gmail.com">
+            Juan Luna 
+        </author>
+        <preference name="Orientatiion" value="landscape" />
+        <preference name="Fullscreen" value="true" />
+</widget>

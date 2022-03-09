@@ -1,0 +1,67 @@
+@font-face {
+	font-family: 'pixelArt';
+	src: url('../../tipography/publicpixel.ttf');
+}
+
+main {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	/* z-index: 999; */
+}
+#containerGame {
+	/* margin-top: 0; */
+}
+/*------------------Progress Bars-------------------*/
+.progressbar {
+	display: block;
+	position: absolute;
+	width: 20px;
+	height: 320px;
+	box-sizing: border-box;
+	border: 1px #777 solid;
+	background: rgba(0, 0, 0, 0.55);
+	top: 0;
+	/* z-index: 2000; */
+}
+
+#leftpanel .progressbar {
+	left: -20px;
+}
+
+#rightpanel .progressbar {
+	right: -20px;
+}
+
+.progressbar .bar {
+	display: block;
+	position: absolute;
+	width: 18px;
+	height: 0;
+	bottom: 0;
+	background: none;
+}
+
+.bar .previewbar {
+	display: block;
+	position: absolute;
+	width: 7px;
+	height: 0;
+	background: rgba(0, 0, 0, 0.75);
+	z-index: 1;
+}
+
+.bar .currentbar {
+	display: block;
+	position: absolute;
+	width: 7px;
+	height: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.75);
+}
+
+.progressbar .bar.energybar,
+.progressbar .bar.poolbar {
+	margin-left: 9px;
+}

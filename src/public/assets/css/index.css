@@ -1,0 +1,10 @@
+@import url('./generic.css');
+/* @import url('utilities.css'); */
+@import url('./custom/game.css');
+/* ********** Components ***** */
+/* **************************************************************************** */
+/* centrar algo */
+/* display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center; */

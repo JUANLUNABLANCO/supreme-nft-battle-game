@@ -1,0 +1,19 @@
+{
+	"name": "BattleRap-Supreme",
+	"version": "0.0.1",
+	"description": "a Beta game with html5 css y js vanilla",
+	"main": "index.js",
+	"node_version": "16.14.0",
+	"npm_version": "8.3.1",
+	"scripts": {
+		"nodeDev": "nodemon ./src/server.js",
+		"nodeProd": "pm2 start ./src/server.js"
+	},
+	"author": "JuanLuna",
+	"license": "ISC",
+	"dependencies": {
+		"dotenv": "^14.3.2",
+		"express": "^4.17.2",
+		"nodemon": "^2.0.15"
+	}
+}

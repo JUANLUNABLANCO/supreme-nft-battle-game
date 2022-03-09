@@ -1,0 +1,159 @@
+/* ********** Custom Properties ********** */
+:root {
+	--first-color: #4f4f4f; /*#0f1926;*/
+	--first-alpha-color: rgba(79, 79, 79, 0.75);
+	--second-color: black; /*#2c3540;*/
+	--second-alpha-color: rgba(44, 53, 64, 0.75);
+	--third-color: rgba(255, 0, 51, 1); /*#39184b; */
+	--third-alpha-color: rgba(255, 0, 51, 0.75);
+	--fourth-color: #547e99;
+	/* text-colors */
+	--text-black-color: #222;
+	--text-white-color: #fcfcfc;
+	--text-purpledark-color: #481f61;
+	--text-purplemiddle-color: #713497;
+	--text-purplelight-color: #923fc3;
+	--subtitle-color: #6a6a6a;
+	--emphasis-color: #4c92bf;
+	--link-color: #fab266;
+	--footer-link-color: #5f637a;
+	--reverse-link-color: #311440;
+	--title-color: #333;
+	/* other colors */
+	--white-color: #fff;
+	--gray-light-color: #f3f3f3;
+	--gray-color: #ccc;
+	--gray-dark-color: #666;
+	--black-color: #000;
+	--white-alpha-color: rgba(255, 255, 255, 0.5);
+	--black-alpha-color: rgba(0, 0, 0, 0.5);
+	--pdf-alpha-color: rgba(50, 20, 65, 0.9);
+	--shadow: 0 0 13px 0 rgba(185, 185, 185, 0.25);
+	/* avatar colors */
+	--barbarian-color: #953ec3;
+	--archer-color: #ee5487;
+	--giant-color: #ec9b3b;
+	--globlin-color: #82b;
+	--wizard-color: #4facff;
+	--wise-color: #eec92b;
+
+	--font: 'Raleway', sans-serif;
+	--max-width: 1200px;
+	--max-with-header: 1700px;
+	--header-height: 4.5rem;
+	--ggs: 3;
+	--svg-icons-color: #0b476d;
+	/* animation area background */
+	--animationSpeed: 30s;
+	/* z-index */
+	--zindex-back: -99;
+	--zindex-normal: 0;
+	--zindex-icons: 99;
+	--zindex-card-top: 700;
+	--zindex-card-normal: 600;
+	--zindex-card-bottom: 500;
+	--zindex-menus: 999; /*999*/
+	--zindex-over-all: 9999; /*9999;*/
+	--zindex-modal: 99999; /*99999;*/
+	--zindex-controls-over-all: 99999; /*99999;*/
+}
+/* ********** Custom Properties ********** */
+/* **************************************************************************** */
+/* ********** Reset ********** */
+*,
+*:before,
+*:after {
+	-webkit-box-sizing: inherit;
+	box-sizing: inherit;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: var(--font);
+	font-size: 16px;
+	font-weight: normal;
+	text-rendering: optimizeLegibility;
+	scroll-behavior: smooth;
+	overflow-x: hidden;
+	background: black;
+}
+
+body {
+	margin: 0;
+	overflow-x: hidden;
+	/* overflow-y: visible; */
+	color: var(--text-color);
+}
+
+main {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	color: var(--link-color);
+	transition: all 0.5s ease-out;
+	text-decoration: none;
+	outline: 0;
+}
+a:hover {
+	opacity: 0.75;
+}
+li {
+	list-style: none;
+}
+figure {
+	margin: 0;
+	padding: 0;
+}
+h1 {
+	margin: 1rem 0;
+	font-size: 2rem;
+}
+
+h2 {
+	margin: 0.75rem 0;
+	font-size: 1.5rem;
+}
+
+h3 {
+	margin: 0.5rem 0;
+	font-size: 1.25rem;
+}
+
+h4 {
+	margin: 0.4rem 0;
+	font-size: 1rem;
+}
+
+h5 {
+	margin: 0.35rem 0;
+	font-size: 0.85rem;
+}
+
+h6 {
+	margin: 0.25rem 0;
+	font-size: 0.7rem;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+p {
+	line-height: 1.6;
+}
+
+/* canvas {
+	width: 100%;
+} */
+/* @media screen and (min-width: 320px) {
+	html {
+		overflow-x: visible;
+	}
+} */
+/* ********** Reset *********************** */
