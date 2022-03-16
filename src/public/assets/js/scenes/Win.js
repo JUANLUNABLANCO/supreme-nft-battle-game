@@ -7,14 +7,14 @@ export class Win extends Phaser.Scene {
 		this.player1Xp = data.player1Xp;
 	}
 	preload() {
-		this.load.image('win', '/assets/images/win_1920x1080.jpg');
+		console.log('WIN PLAYER 1');
 	}
 	create() {
 		this.platform = this.physics.add.image(960, 736, 'platform').setImmovable();
 		this.gameoverImage = this.add.image(960, 540, 'win');
 
 		this.platform.body.allowGravity = false;
-		this.playCard1 = this.physics.add.image(1100, 100, 'playCard1');
+		this.playCard1 = this.physics.add.image(1100, 100, `playCharacter1_${this.player1}`);
 		this.playCard1.setBounce(0.4);
 		this.physics.add.collider(this.playCard1, this.platform);
 		this.textsMaker();

@@ -98,14 +98,10 @@ this.time.delayedCall(1000, this.temporizador, [], this);
 // de la misma clase a la escena que necesitemos iniciar como primera.
 
 preload(){
-this.scene.start("Main"); // va la escena principal
-
-## SCENAS MANEJO
-
-export class Main extends Phaser.Scene {
-constructor() {
-super({ key: 'main', active: true }); // estará activa aunque cargues otra, se verán las dos, esta debaj ode la otra
-}
+...
+this.load.on('complete', () => {
+this.scene.start('Main');
+});
 create(){
 this.scene.add("sceneX", new SceneX); // se añade la escena dinámicamente una encima de la otra
 // manager scene
@@ -249,37 +245,6 @@ this.physics.add.existing(platform, true); // static = true
 // sprites with anims 5 frames
 this.player = this.add.sprite(x, y, element, 3); // 4º frame del sprite
 this.physics.add.existing(this.player, false) // static = false --> dinamyc gravity affect
-
-## grupos de plataformas y colisiones con el player
-
-this.platforms = this.add.group();
-
-let ground = this.add.sprite(x, y, 'ground');
-this.phisics.add.existing(ground, true);
-this.platforms.add(ground);
-
-let ground2 = this.add.sprite(x2, y2, 'ground');
-this.phisics.add.existing(ground2, true);
-this.platforms.add(ground2);
-
-this.physics.add.collider(this.player, this.platforms);
-
-...
-
-## crear grupos de objetos // mira MENUS
-
-this.items = this.add.group({
-key: 'button1',
-setXY:{
-x: 100,
-y: 20
-},
-key: 'button2',
-setXY:{
-x: 100,
-y: 20
-}
-});
 
 # carga de archivos mp3, bitmaps fonts
 
@@ -748,7 +713,7 @@ this.sprites = []; // aquí o en init
 
 }
 
-# crear elementos y grupos
+# grupos y containers
 
 ## grupos simples
 
@@ -780,11 +745,11 @@ grupo.playAnimation('moneda'); // se animaran todos los elementos
 
 // iterar sobre los elementos
 grupo.getChildren().map((x)=>{
-x.setScale(2); // escalrá todas la monedas
+x.setScale(2); // escalará todas la monedas
 });
 o
 grupo.children.iterate((x)=>{
-x.setScale(2); // escalrá todas la monedas
+x.setScale(2); // escalará todas la monedas
 x.body.setAllowGravity(fasle); // quitarle la gravedad, dejalo como grupo normal no estatico
 });
 
@@ -839,6 +804,37 @@ y:0
 })
 
 }
+
+## grupos de plataformas y colisiones con el player
+
+this.platforms = this.add.group();
+
+let ground = this.add.sprite(x, y, 'ground');
+this.phisics.add.existing(ground, true);
+this.platforms.add(ground);
+
+let ground2 = this.add.sprite(x2, y2, 'ground');
+this.phisics.add.existing(ground2, true);
+this.platforms.add(ground2);
+
+this.physics.add.collider(this.player, this.platforms);
+
+...
+
+## crear grupos de objetos // mira MENUS
+
+this.items = this.add.group({
+key: 'button1',
+setXY:{
+x: 100,
+y: 20
+},
+key: 'button2',
+setXY:{
+x: 100,
+y: 20
+}
+});
 
 # cursors and space bar
 

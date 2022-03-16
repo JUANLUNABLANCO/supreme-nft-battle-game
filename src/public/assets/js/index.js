@@ -1,3 +1,4 @@
+import { Bootloader } from './Bootloader.js';
 import { Main } from './scenes/Main.js';
 import { Battle } from './scenes/Battle.js';
 import { GameOver } from './scenes/GameOver.js';
@@ -8,7 +9,7 @@ const config = {
 	width: 1920,
 	height: 970,
 	parent: 'containerGame',
-	scene: [Main, Battle, GameOver, Win],
+	scene: [Bootloader, Main, Battle, GameOver, Win],
 	physics: {
 		default: 'arcade',
 		arcade: {

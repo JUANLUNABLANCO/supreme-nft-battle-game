@@ -4,7 +4,7 @@
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
 # business
-
+__RESOURCES__
 MY-README.md
 GAME-README.md
 # Node artifact files
