@@ -6,7 +6,7 @@
 	"node_version": "16.14.0",
 	"npm_version": "8.3.1",
 	"scripts": {
-		"nodeDev": "nodemon ./src/server.js",
+		"nodeDev": "node ./src/server.js",
 		"nodeProd": "pm2 start ./src/server.js"
 	},
 	"author": "JuanLuna",

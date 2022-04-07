@@ -11,57 +11,358 @@ main {
 	/* z-index: 999; */
 }
 #containerGame {
-	/* margin-top: 0; */
+	/*margin-top: 0;
+	*/
 }
-/*------------------Progress Bars-------------------*/
-.progressbar {
-	display: block;
+/* -----------------------------
+-------blink    STYLES----------
+----------------------------- */
+#containerCSS {
+	display: none;
+}
+.blink {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 610px;
+	/* border: 1px solid red; */
+	/* z-index: 22222; */
+}
+/* las orlas de neon */
+.blink img {
+	width: 35vw !important;
+	height: 35vh;
 	position: absolute;
-	width: 20px;
-	height: 320px;
-	box-sizing: border-box;
-	border: 1px #777 solid;
-	background: rgba(0, 0, 0, 0.55);
-	top: 0;
-	/* z-index: 2000; */
+	left: 0px;
+	right: 0px;
+	bottom: 70vh;
+	/* bottom: 0px; */
+
+	/* right: 0px; */
+	/* top: 0px;
+	bottom: 0px; */
+	margin: auto;
+	/* border-color: #00edff;
+	border-style: solid;
+	border-width: 1px; */
+	opacity: 1;
+	/* -webkit-box-shadow: 0 0 7px 0 #00edff; */
+	/* box-shadow: 0 0 7px 0 #00edff; */
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+	-o-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+
+	animation: blink 2.5s step-start 0s infinite;
+	-webkit-animation: blink 2.5s step-start 0s infinite;
 }
 
-#leftpanel .progressbar {
+@keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	2% {
+		opacity: 0;
+	}
+	4% {
+		opacity: 1;
+	}
+	6% {
+		opacity: 0;
+	}
+	15% {
+		opacity: 1;
+	}
+	16% {
+		opacity: 0;
+	}
+	17% {
+		opacity: 1;
+	}
+	18% {
+		opacity: 0;
+	}
+	30% {
+		opacity: 1;
+	}
+	31% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	52% {
+		opacity: 0;
+	}
+	54% {
+		opacity: 1;
+	}
+	70% {
+		opacity: 0;
+	}
+	71% {
+		opacity: 1;
+	}
+	72% {
+		opacity: 0;
+	}
+	73% {
+		opacity: 1;
+	}
+	74% {
+		opacity: 0;
+	}
+}
+@-webkit-keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	2% {
+		opacity: 0;
+	}
+	4% {
+		opacity: 1;
+	}
+	6% {
+		opacity: 0;
+	}
+	15% {
+		opacity: 1;
+	}
+	16% {
+		opacity: 0;
+	}
+	17% {
+		opacity: 1;
+	}
+	18% {
+		opacity: 0;
+	}
+	30% {
+		opacity: 1;
+	}
+	31% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	52% {
+		opacity: 0;
+	}
+	54% {
+		opacity: 1;
+	}
+	70% {
+		opacity: 0;
+	}
+	71% {
+		opacity: 1;
+	}
+	72% {
+		opacity: 0;
+	}
+	73% {
+		opacity: 1;
+	}
+	74% {
+		opacity: 0;
+	}
+}
+.blink:hover {
+	/* otras animaciones sobre las cartas */
+}
+
+/* play button ##################  */
+.video-box {
+	width: 0;
+	height: 0;
+	/* margin: 100px auto; */
+}
+.video-box img {
+	width: 100%;
+}
+.video-box .play-btn {
+	background: rgba(245, 9, 9, 0.75);
+	color: #fff;
+	font-size: 50px;
+	width: 200px;
+	height: 200px;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	margin: auto;
+	text-align: center;
+	border-radius: 50%;
+	box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.5);
+	z-index: 100;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
+}
+.video-box .play-btn i {
+	line-height: 200px;
+	margin-left: 10px;
+}
+.video-box .play-btn:before,
+.video-box .play-btn:after {
+	content: '';
+	position: absolute;
+	border: 2px solid rgb(245, 9, 9);
+	border-radius: 50%;
 	left: -20px;
-}
-
-#rightpanel .progressbar {
 	right: -20px;
+	top: -20px;
+	bottom: -20px;
+	animation: animate 1.5s linear infinite;
+	opacity: 0;
+	-webkit-animation: animate 1.5s linear infinite;
 }
+.video-box .play-btn:after {
+	animation-delay: 0.5s;
+}
+@keyframes animate {
+	0% {
+		transform: scale(0.5);
+	}
 
-.progressbar .bar {
+	50% {
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1.5);
+	}
+}
+/* play button ##################  */
+/* pre loader 1 component #######  */
+/* #preloader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+#loader {
 	display: block;
+	position: relative;
+	left: 50%;
+	top: 50%;
+	width: 150px;
+	height: 150px;
+	margin: -75px 0 0 -75px;
+	border-radius: 50%;
+	border: 3px solid transparent;
+	border-top-color: #9370db;
+	-webkit-animation: spin 2s linear infinite;
+	animation: spin 2s linear infinite;
+}
+#loader:before {
+	content: '';
 	position: absolute;
-	width: 18px;
-	height: 0;
+	top: 5px;
+	left: 5px;
+	right: 5px;
+	bottom: 5px;
+	border-radius: 50%;
+	border: 3px solid transparent;
+	border-top-color: #ba55d3;
+	-webkit-animation: spin 3s linear infinite;
+	animation: spin 3s linear infinite;
+}
+#loader:after {
+	content: '';
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	right: 15px;
+	bottom: 15px;
+	border-radius: 50%;
+	border: 3px solid transparent;
+	border-top-color: #ff00ff;
+	-webkit-animation: spin 1.5s linear infinite;
+	animation: spin 1.5s linear infinite;
+}
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+} */
+/* pre loader 1 component #######  */
+/* pre loader 2 component #######  */
+html,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: black;  !important;
+	/* background: #f05a30 !important; */
+}
+canvas,
+main,
+#containerCSS,
+#containerGame {
+	background-color: black;
+}
+svg {
+	position: absolute;
+	width: 240px;
+	height: 120px;
+	top: 0;
+	right: 0;
 	bottom: 0;
-	background: none;
+	left: 0;
+	margin: auto;
 }
 
-.bar .previewbar {
-	display: block;
+svg #plug,
+svg #socket {
+	fill: #fdb515; /*#fdb515;*/
+}
+
+svg #loop-normal {
+	fill: none;
+	stroke: #fdb515; /*#fdb515;*/
+	stroke-width: 12;
+}
+
+svg #loop-offset {
+	display: none;
+}
+
+.credit {
 	position: absolute;
-	width: 7px;
-	height: 0;
-	background: rgba(0, 0, 0, 0.75);
-	z-index: 1;
+	bottom: 0px;
+	width: 100%;
+	text-align: center;
 }
 
-.bar .currentbar {
-	display: block;
-	position: absolute;
-	width: 7px;
-	height: 0;
-	bottom: 0;
-	background: rgba(0, 0, 0, 0.75);
-}
-
-.progressbar .bar.energybar,
-.progressbar .bar.poolbar {
-	margin-left: 9px;
+.credit a {
+	color: #fff; /*#fdb515;*/
+	font: 800 75% 'Open Sans', sans-serif;
+	text-transform: uppercase;
+	text-decoration: none;
 }

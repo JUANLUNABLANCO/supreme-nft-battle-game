@@ -2,6 +2,17 @@ export class Battle extends Phaser.Scene {
 	constructor() {
 		super({ key: 'Battle' });
 	}
+	resize() {
+		// resize window
+		const canvas = document.querySelector('canvas');
+		const html = document.querySelector('html');
+		const WindowWidth = window.innerWidth;
+		const WindowHeight = window.innerHeight;
+		canvas.style.width = WindowWidth + 'px';
+		canvas.style.height = WindowHeight + 'px';
+		html.style.overflow = 'hidden';
+		console.log('resized window');
+	}
 
 	init(data) {
 		// recibiendo datos de Main
@@ -15,35 +26,39 @@ export class Battle extends Phaser.Scene {
 
 		// #### rimes
 		this.RIMES = [
-			'When I hear your voice, it makes me \n\ntravel like rap. Your voice is my culture, \n\nyou have made me fall in love',
-			'Because you are that rhyme that removes \n\nthe thorns that have remained from \n\nthe past, your presence enlightens me',
+			'When I hear your voice, it makes me \n\ntravel like rap. Your voice is my \n\nculture, you have made me fall in love',
+			'Because you are that rhyme that removes \n\nthe thorns that have remained from \n\nthe past, your presence enlightens \n\nme',
 			'You are the infinite ink with which I \n\nwant to write The one that made my \n\nheart beat again',
 			'My hands are simple rhymes with a flow \n\nthat slides in you An I love you \n\ndisguised in a simple caress',
-			'You are the butterfly that has crossed \n\nthe wide sea And by perching on my lips\n\nyou inspired me to rhyme',
+			'You are the butterfly that has crossed \n\nthe wide sea And by perching on my \n\nlips you inspired me to rhyme',
 			'If only your look makes me blush and \n\nyour smile inspires me more than lukie\n\n look',
 			'Today I feel like a poet madly in love \n\nAnd every rhyme that is about love, \n\nI have saved it for you',
 			'If I draw a graffiti of your name on \n\nthe wall With that I see your face, you\n\n managed to drive me crazy',
 			'I love you, my love, as much as I love \n\nrap You are the closest thing to the \n\nfeeling of rapping',
-			'Because you fill my heart and soul with\n\n life, you are the most beautiful \n\nphrase that stands out in my rhymes',
+			'Because you fill my heart and soul with \n\nlife, you are the most beautiful \n\nphrase that stands out in my rhymes',
 			'I love you, my love, as much as I love \n\nrapping. You are the closest thing to \n\nfeeling rapping',
 			'Because you fill my heart and soul with \n\nlife, you are the most beautiful \n\nphrase that stands out in my rhymes',
-			'When you are not present I lack motivation \n\nBecause you are the reason for \n\nall my inspiration',
-			'If rap is a mistake I want to live wrong \n\nIf loving you is a mistake for \n\nyou I always live wrong',
+			'When you are not present I lack \n\nmotivation Because you are the reason \n\nfor all my inspiration',
+			'If rap is a mistake I want to live \n\nwrong If loving you is a mistake for \n\nyou I always live wrong',
 			'And I have two loves, don´t make me \n\njealous Rap and you my love my most \n\nbeautiful butterfly',
 			'You entered my head like a love rhyme \n\nTurning each thorn into red flower \n\npetals',
 			'I think of you and only poetry comes \n\nout and it is my heart that shouts that \n\nyou are my joy',
 			'Never let go of my hand because I love\n\n to feel your skin and your soft lips \n\nthat kiss me with a taste of honey',
-			'You are the number one fan of this rapper \n\nAnd that´s why I dedicate this \n\nletter to you with my phrases',
+			'You are the number one fan of this \n\nrapper And that´s why I dedicate this \n\nletter to you with my phrases',
 			'You are the drug that cannot be left \n\nI am addicted to your love because you \n\nare like my rap',
 			'I love you, my love, as much as I love \n\nrap You are the closest thing to the \n\nfeeling of rapping',
-			'Because you fill my heart and soul with \n\nlife, you are the most beautiful phrase \n\nthat stands out in my rhymes',
+			'Because you fill my heart and soul with \n\nlife, you are the most beautiful \n\nphrase that stands out in my rhymes',
 			'I love you, my love, as much as I love \n\nrap You are the closest thing to the \n\nfeeling of rapping',
-			'Because you fill my heart and soul with \n\nlife, you are the most beautiful phrase \n\nthat stands out in my rhymes',
+			'Because you fill my heart and soul with \n\nlife, you are the most beautiful \n\nphrase that stands out in my rhymes',
 		];
+
+		this.musicDelayPlayer1 = [0, 10000, 10000, 12000, 15000, 10000, 10000, 12000, 12000];
+		this.musicDelaysEnemy = [0, 15000, 15000, 22000, 18000, 26000, 12000, 23000, 14000];
 
 		// variables here
 		this.habilities = ['hurl insults', 'xtreme velocity', 'super rhymes', ' high level rap', 'desmoralize'];
 		this.habilitiesCoef = [2.5, 3.5, 4, 2.2, 3];
+		this.MAX_ROUNDS_PER_GAME = 1;
 		// player 1
 		this.p1Power = 500; // esto podrá ser calculado en alpha version a partir de coeficientes, tipo de carta, número, etc
 		this.p1Moral = 100;
@@ -73,7 +88,10 @@ export class Battle extends Phaser.Scene {
 	}
 
 	preload() {
+		this.resize();
+		window.addEventListener('resize', this.resize);
 		console.log(`/assets/images/characters/${this.player1}.png`);
+		this.sound.stopAll();
 	}
 	create() {
 		// /* ##### sounds */
@@ -85,6 +103,14 @@ export class Battle extends Phaser.Scene {
 		this.soundDeffense2 = this.sound.add('soundDeffense2');
 		this.soundDeffense3 = this.sound.add('soundDeffense3');
 		this.soundDeffense4 = this.sound.add('soundDeffense4');
+		this.soundAttackE1 = this.sound.add('soundAttackE1');
+		this.soundAttackE2 = this.sound.add('soundAttackE2');
+		this.soundAttackE3 = this.sound.add('soundAttackE3');
+		this.soundAttackE4 = this.sound.add('soundAttackE4');
+		this.soundDeffenseE1 = this.sound.add('soundDeffenseE1');
+		this.soundDeffenseE2 = this.sound.add('soundDeffenseE2');
+		this.soundDeffenseE3 = this.sound.add('soundDeffenseE3');
+		this.soundDeffenseE4 = this.sound.add('soundDeffenseE4');
 		this.soundButtonClick = this.sound.add('soundButtonClick');
 		// menu sounds
 
@@ -247,7 +273,8 @@ export class Battle extends Phaser.Scene {
 					this.soundButtonClick.play();
 					// ######## click BUTTON ATTACK ######
 					console.log('attack A');
-					this.attackP1Selected('A', 6000);
+					let delay = this.musicDelayPlayer1[1];
+					this.attackP1Selected('A', delay);
 				}
 			},
 			this
@@ -260,7 +287,8 @@ export class Battle extends Phaser.Scene {
 					this.soundButtonClick.play();
 					// ######## click BUTTON ATTACK ######
 					console.log('attack B');
-					this.attackP1Selected('B', 5000);
+					let delay = this.musicDelayPlayer1[2];
+					this.attackP1Selected('B', delay);
 				}
 			},
 			this
@@ -273,7 +301,8 @@ export class Battle extends Phaser.Scene {
 					this.soundButtonClick.play();
 					// ######## click BUTTON ATTACK ######
 					console.log('attack C');
-					this.attackP1Selected('C', 7000);
+					let delay = this.musicDelayPlayer1[3];
+					this.attackP1Selected('C', delay);
 				}
 			},
 			this
@@ -286,7 +315,8 @@ export class Battle extends Phaser.Scene {
 					this.soundButtonClick.play();
 					// ######## click BUTTON ATTACK ######
 					console.log('attack D');
-					this.attackP1Selected('D', 10000);
+					let delay = this.musicDelayPlayer1[4];
+					this.attackP1Selected('D', delay);
 				}
 			},
 			this
@@ -341,7 +371,8 @@ export class Battle extends Phaser.Scene {
 					this.soundButtonClick.play();
 					// ######## click BUTTON ATTACK ######
 					console.log('deffense A');
-					this.deffenseP1Selected('A', 6000);
+					let delay = this.musicDelayPlayer1[5];
+					this.deffenseP1Selected('A', delay);
 				}
 			},
 			this
@@ -354,7 +385,8 @@ export class Battle extends Phaser.Scene {
 					this.soundButtonClick.play();
 					// ######## click BUTTON ATTACK ######
 					console.log('deffense B');
-					this.deffenseP1Selected('B', 6000);
+					let delay = this.musicDelayPlayer1[6];
+					this.deffenseP1Selected('B', delay);
 				}
 			},
 			this
@@ -367,7 +399,8 @@ export class Battle extends Phaser.Scene {
 					this.soundButtonClick.play();
 					// ######## click BUTTON ATTACK ######
 					console.log('deffense C');
-					this.deffenseP1Selected('C', 7000);
+					let delay = this.musicDelayPlayer1[7];
+					this.deffenseP1Selected('C', delay);
 				}
 			},
 			this
@@ -380,7 +413,8 @@ export class Battle extends Phaser.Scene {
 					this.soundButtonClick.play();
 					// ######## click BUTTON ATTACK ######
 					console.log('deffense D');
-					this.deffenseP1Selected('D', 8000);
+					let delay = this.musicDelayPlayer1[8];
+					this.deffenseP1Selected('D', delay);
 				}
 			},
 			this
@@ -431,38 +465,28 @@ export class Battle extends Phaser.Scene {
 	}
 	// BATTLE MENUS ######################
 	progressbarsPowerMaker() {
-		// progress bar 1
 		const maxPower = 500; // rapper max power
 		const maxSizeBar = 550; // bar max size
 		this.progressBars = this.add.graphics();
 		this.progressBars.clear();
-
+		// progress bar 1
 		this.progressBars.fillStyle(0x2d2d2d);
 		this.progressBars.fillRect(32, 60, maxSizeBar, 35);
 
-		// this.progressBars.fillStyle(0xffffff);
-		// this.progressBars.fillRect(32, 60, maxSizeBar, 35);
 		this.progressBars.fillStyle(0x2dff2d);
 		this.progressBars.fillRect(32, 60, (maxSizeBar * this.p1Power) / maxPower, 35);
+
 		// progress bar 2
 		this.progressBars.fillStyle(0x2d2d2d);
 		this.progressBars.fillRect(1226, 60, maxSizeBar, 35);
 
-		// this.progressBars.fillStyle(0xffffff);
-		// this.progressBars.fillRect(1226, 60, maxSizeBar, 35);
 		this.progressBars.fillStyle(0x2dff2d);
 		this.progressBars.fillRect(1226, 60, (maxSizeBar * this.p2Power) / maxPower, 35);
 
 		// update text sibling
-		this.p1PowerText.setText(this.p1Power + '/500');
-		this.p2PowerText.setText(this.p2Power + '/500');
+		this.p1PowerText.setText(Math.ceil(this.p1Power) + '/500');
+		this.p2PowerText.setText(Math.ceil(this.p2Power) + '/500');
 	}
-	/**
-	 * @dev modifica los textos del jugador 1 y el dos puedes darle una animación o un setimeOut al 2
-	 * @param {*} text1
-	 * @param {*} text2
-	 *
-	 */
 	TextAction(text1 = '', text2 = '') {
 		// SHOULD BE panel turn1 y panel turn2 off, and menuP1 active
 		this.p1TextAction.setText(text1);
@@ -470,20 +494,20 @@ export class Battle extends Phaser.Scene {
 		this.p2TextAction.setText(text2);
 		// TODO sonido risa, burla,...
 	}
-	showMenuP1(ver) {
-		console.log('in show menu p1: ', ver);
-		if (ver == true) {
-			console.log('visible: true | interactive: true');
-			this.menuP1Init.setVisible(ver);
-			// this.menuP1Attack.setVisible(false);
-			// this.menuP1Deffense.setVisible(false);
+	showMenuP1(turn) {
+		console.log('in show menu p1: ', turn);
+		if (turn == 1) {
+			console.log('p1 visible: true | p2 visible: false');
+			this.menuP1Init.setVisible(true);
+			this.menuP1Attack.setVisible(false);
+			this.menuP1Deffense.setVisible(false);
 			this.panelLogoLeft.setVisible(false);
 			this.panelLogoRight.setVisible(true);
 		} else {
-			console.log('visible: false | interactive: true');
+			console.log('p2 visible: true | p1 visible: false');
 			this.menuP1Init.setVisible(false);
-			// this.menuP1Attack.setVisible(false);
-			// this.menuP1Deffense.setVisible(false);
+			this.menuP1Attack.setVisible(false);
+			this.menuP1Deffense.setVisible(false);
 			this.panelLogoRight.setVisible(false);
 			this.panelLogoLeft.setVisible(true);
 		}
@@ -511,7 +535,7 @@ export class Battle extends Phaser.Scene {
 		this.p1TextAction.setText('I´m ready...');
 		this.p2TextAction.setText('You´re dead, motherfucker!');
 
-		this.changueTurn(1, 4000);
+		this.changueTurn(1, 1000);
 	}
 	changueTurn(turnPlayer, delay) {
 		console.log('in changueTurn: ' + turnPlayer);
@@ -525,7 +549,7 @@ export class Battle extends Phaser.Scene {
 					this.micro2.data.set('position', 'down');
 				},
 			});
-			this.showMenuP1(false);
+			this.showMenuP1(this.turn);
 			this.turnP2();
 		} else if (turnPlayer == 1) {
 			this.timedEvent = this.time.addEvent({
@@ -535,7 +559,7 @@ export class Battle extends Phaser.Scene {
 					this.micro2.data.set('position', 'up');
 				},
 			});
-			this.showMenuP1(true);
+			this.showMenuP1(this.turn);
 		} else {
 			console.log('TURNO 0');
 		}
@@ -556,8 +580,10 @@ export class Battle extends Phaser.Scene {
 	turnP2() {
 		console.log('turno 2');
 		// randomixe attack or defense
+		let attacktype = Phaser.Math.Between(1, 8);
+		let delay = this.musicDelaysEnemy[attacktype];
+		this.optionP2Selected(attacktype, delay);
 	}
-
 	deffenseP1Selected(deffensetype, delay) {
 		if (deffensetype == 'A') {
 			this.soundDeffense1.play();
@@ -590,13 +616,12 @@ export class Battle extends Phaser.Scene {
 			},
 		});
 	}
-
 	attackP1Selected(attackType, delay) {
 		// TYPE ATTACK 1
 		if (attackType == 'A') {
 			this.soundAttack1.play();
 			// lanzamiento de rimas
-			let attackRime = this.RIMES[Phaser.Math.Between(0, 24)];
+			let attackRime = this.RIMES[Phaser.Math.Between(0, 23)];
 
 			// EAXMPLE 'When I hear your voice, it makes \n\nme travel like rap. Your voice is my\n\nculture, you have made me fall in love',
 			this.TextAction(attackRime, '');
@@ -701,52 +726,126 @@ export class Battle extends Phaser.Scene {
 			// ....
 		}
 		this.timedEvent = this.time.addEvent({
-			delay: delay + 5000,
+			delay: delay + 1000,
 			callback: () => {
 				this.checkSatusGame(1);
 			},
 		});
 	}
+	optionP2Selected(attacktype, delay) {
+		let soundtrack;
+		if (attacktype == 1) {
+			console.log('Enemy Attack 1');
+			this.soundAttackE1.play();
+			this.paintButton(attacktype);
+			// lanzamiento de rimas
+			let attackRime = this.RIMES[Phaser.Math.Between(0, 23)];
 
-	defenseP2() {
-		// TODO defense p2 logic
-		// this.textsMaker();
-		this.checkSatusGame(2); // player2 check
-	}
-	attackP2() {
-		// attacks p2
-		// this.p1PowerAttack = (((this.p1Power / 10) * this.p1Moral) / 100) * this.habilitiesCoef[this.p1Hability];
-		// console.log('attack: ' + this.p1PowerAttack);
-		// this.p2Defense = (this.p2Moral / 100) * this.habilitiesCoef[this.p1Hability];
-		// console.log('defense: ' + this.p2Defense);
-		// this.totalAttack = this.p1PowerAttack - this.p2Defense;
-		// console.log(this.totalAttack);
-		// this.p2Power -= this.totalAttack;
-		// this.p2PowerText.setText('POWER: ' + this.p2Power + '/100');
-		// this.textsMaker();
-		this.soundAttack4.play();
-		// lanzamiento de rimas
-		let attackRime = this.RIMES[Phaser.Math.Between(0, 24)];
+			// EAXMPLE 'When I hear your voice, it makes \n\nme travel like rap. Your voice is my\n\nculture, you have made me fall in love',
+			this.TextAction('', attackRime);
 
-		// EAXMPLE 'When I hear your voice, it makes \n\nme travel like rap. Your voice is my\n\nculture, you have made me fall in love',
-		this.TextAction(attackRime, '');
+			this.calculateAttackP2toP1();
+		} else if (attacktype == 2) {
+			console.log('Enemy Attack 2');
+			this.soundAttackE2.play();
+			this.paintButton(attacktype);
+			// lanzamiento de rimas
+			let attackRime = this.RIMES[Phaser.Math.Between(0, 23)];
 
+			// EAXMPLE 'When I hear your voice, it makes \n\nme travel like rap. Your voice is my\n\nculture, you have made me fall in love',
+			this.TextAction('', attackRime);
+
+			this.calculateAttackP2toP1();
+		} else if (attacktype == 3) {
+			console.log('Enemy Attack 3');
+			this.soundAttackE3.play();
+			this.paintButton(attacktype);
+			// lanzamiento de rimas
+			let attackRime = this.RIMES[Phaser.Math.Between(0, 23)];
+
+			// EAXMPLE 'When I hear your voice, it makes \n\nme travel like rap. Your voice is my\n\nculture, you have made me fall in love',
+			this.TextAction('', attackRime);
+
+			this.calculateAttackP2toP1();
+		} else if (attacktype == 4) {
+			console.log('Enemy Attack 4');
+			this.soundAttackE4.play();
+			this.paintButton(attacktype);
+			// lanzamiento de rimas
+			let attackRime = this.RIMES[Phaser.Math.Between(0, 23)];
+
+			// EAXMPLE 'When I hear your voice, it makes \n\nme travel like rap. Your voice is my\n\nculture, you have made me fall in love',
+			this.TextAction('', attackRime);
+
+			this.calculateAttackP2toP1();
+		} else if (attacktype > 4) {
+			console.log('Enemy deffense');
+			soundtrack = `soundDeffenseE${Phaser.Math.Between(1, 4)}`;
+			switch (soundtrack) {
+				case 'soundDeffenseE1':
+					this.soundDeffenseE1.play();
+					break;
+				case 'soundDeffenseE2':
+					this.soundDeffenseE2.play();
+					break;
+				case 'soundDeffenseE3':
+					this.soundDeffenseE3.play();
+					break;
+				case 'soundDeffenseE4':
+					this.soundDeffenseE4.play();
+					break;
+			}
+			this.paintButton(attacktype);
+			this.TextAction('', 'EH EH EH EH EH EH ....');
+			this.calculateDeffenseP2();
+		}
 		this.timedEvent = this.time.addEvent({
-			delay: delay + 5000,
+			delay: delay + 1000,
 			callback: () => {
-				console.log('Enemy attacking Player1!');
-				this.p2PowerAttack = (((this.p2Power / 10) * this.p2Moral) / 100) * this.habilitiesCoef[this.p2Hability];
-				console.log('attack: ' + this.p2PowerAttack);
-				this.p1Defense = (this.p2Moral / 100) * this.habilitiesCoef[this.p2Hability];
-				console.log('defense: ' + this.p1Defense);
-				this.totalAttack = this.p2PowerAttack - this.p1Defense;
-				console.log(this.totalAttack);
-				this.p1Power -= this.totalAttack;
-				this.p1PowerText.setText('POWER: ' + this.p1Power + '/100');
-				this.textsMaker();
-				this.checkSatusGame(1);
+				this.repaintButton();
+				this.checkSatusGame(2);
 			},
 		});
+	}
+	paintButton(attacktype) {
+		if (attacktype > 0 && attacktype < 5) {
+			this.button4.setTint(0xcaffca);
+		} else {
+			this.button5.setTint(0xcaffca);
+		}
+	}
+	repaintButton() {
+		this.button4.setTint(0xffffff);
+		this.button5.setTint(0xffffff);
+	}
+	calculateAttackP2toP1() {
+		let p2PowerAttack = (this.p2Power / 10) * (this.p2Moral / 100) * Phaser.Math.Between(1, 5); // máximo 50
+		console.log('attack: ' + p2PowerAttack);
+		this.p1Defense = ((this.p1Moral / 100 + this.p1Power / 100) / 2) * Phaser.Math.Between(1, 50); // numero entre 1 y 50
+		console.log('defense: ' + this.p1Defense);
+		if (p2PowerAttack > this.p1Defense) this.totalAttack = p2PowerAttack - this.p1Defense;
+		else this.totalAttack = 100;
+		console.log('p2 restará ' + this.totalAttack + ' power a p1');
+		this.p1Power -= this.totalAttack;
+		// this.p2Power = 0; // DEBUG
+		console.log('p1 Power: ' + this.p1Power);
+		if (this.p1Power >= 0) {
+			this.p1PowerText.setText(this.p1Power + '/500');
+		} else {
+			this.p1PowerText.setText('0/500');
+			this.p1Power = 0;
+		}
+		this.progressbarsPowerMaker();
+	}
+	calculateDeffenseP2() {
+		this.p2Power += 100;
+		if (this.p2Power >= 500) {
+			this.p2PowerText.setText('500/500');
+			this.p2Power = 500;
+		} else {
+			this.p1PowerText.setText(this.p2Power + '/500');
+		}
+		this.progressbarsPowerMaker();
 	}
 	checkSatusGame(turnPlayer) {
 		let newTurn;
@@ -757,11 +856,13 @@ export class Battle extends Phaser.Scene {
 			if (this.p1Power <= 0) {
 				// TODO aumentar experiencia player2
 				this.p2RoundsWinned++;
-				if (this.p2RoundsWinned >= 1) {
+				// WARNING TODO control de rounds
+				if (this.p2RoundsWinned >= this.MAX_ROUNDS_PER_GAME) {
 					console.log('game over, ganador p2');
 					this.timedEvent = this.time.addEvent({
 						delay: delay,
 						callback: () => {
+							this.sound.stopAll();
 							this.gameOver(false);
 						},
 					});
@@ -769,6 +870,7 @@ export class Battle extends Phaser.Scene {
 					this.timedEvent = this.time.addEvent({
 						delay: delay,
 						callback: () => {
+							this.sound.stopAll();
 							this.nextRound();
 						},
 					});
@@ -777,19 +879,21 @@ export class Battle extends Phaser.Scene {
 			if (this.p2Power <= 0) {
 				// TODO aumentar experiencia player1
 				this.p1RoundsWinned++;
-				if (this.p1RoundsWinned >= 1) {
+				if (this.p1RoundsWinned >= this.MAX_ROUNDS_PER_GAME) {
 					console.log('ganaste ganador p1');
 					this.p1Xp++;
 					this.timedEvent = this.time.addEvent({
 						delay: delay,
 						callback: () => {
-							this.gameOver(false);
+							this.sound.stopAll();
+							this.gameOver(true);
 						},
 					});
 				} else {
 					this.timedEvent = this.time.addEvent({
 						delay: delay,
 						callback: () => {
+							this.sound.stopAll();
 							this.nextRound();
 						},
 					});
@@ -803,7 +907,7 @@ export class Battle extends Phaser.Scene {
 	}
 	gameOver(winner = false) {
 		// MOSTRAR TESTOS DE GANADOR O PERDEDOR ANTES DE IR A LA ESCENA
-		if (winner == true) {
+		if (winner == true || winner == false) {
 			this.scene.start('Win', { player1: this.player1, player1Xp: this.p1Xp });
 		} else {
 			this.scene.start('Gameover', { player1: this.player1, player1Xp: this.p1Xp });

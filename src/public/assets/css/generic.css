@@ -78,7 +78,7 @@ html {
 	text-rendering: optimizeLegibility;
 	scroll-behavior: smooth;
 	overflow-x: hidden;
-	background: black;
+	/* background: black; */
 }
 
 body {

@@ -29,9 +29,12 @@ export class Bootloader extends Phaser.Scene {
 		// ########## resize and orientation
 		this.resize();
 		window.addEventListener('resize', this.resize);
+		document.getElementById('containerCSS').style.display = 'none';
 
 		// ########## Main scene ###############################################
+		this.load.image('landscapeWarning', '/assets/images/elements/landscape_warning.png');
 		this.load.image('background', '/assets/images/background_1920x1080.jpg');
+		this.load.image('mainBackground', '/assets/images/background-main_1920x1080.jpg');
 		// this.load.image('gameover', '/assets/images/gameover_1920x1080.jpg');
 		this.load.image('platform', '/assets/images/platform_1920x28.png');
 		// this.load.image('deckCards', '/assets/images/deckCards.png');
@@ -43,10 +46,14 @@ export class Bootloader extends Phaser.Scene {
 		// this.load.image('navbarControls1', '/assets/images/elements/navbar_controls1.png');
 
 		// this.load.audio('orlaMove', '/assets/sounds/orlaMove.mp3');
+		this.load.audio('mainMusic', '/assets/mp3/supreme_base01_main.mp3');
+		this.load.audio('selectplayerMusic', '/assets/mp3/supreme_base02_battle.mp3');
+		this.load.audio('gameoverMusic', '/assets/mp3/supreme_base03_gameover.mp3');
+		this.load.audio('winMusic', '/assets/mp3/supreme_base04_gamewin.mp3');
 		this.load.audio('rapperSelected', '/assets/sounds/rapperSelected.mp3');
-		this.load.audio('ambientMusic', '/assets/mp3/supreme_base01.mp3');
-
-		this.load.image('landscapeWarning', '/assets/images/elements/landscape_warning.png');
+		// this.load.audio('rappersFallDawn', '/assets/sounds/rappersFallDawn.wav');
+		this.load.audio('soundGameover', '/assets/sounds/gameover.mp3');
+		this.load.audio('soundWin', '/assets/sounds/victory.wav');
 		// ########## Main scene ###############################################
 		// ########## Battle scene #############################################
 		// nuevos personajes
@@ -73,6 +80,9 @@ export class Bootloader extends Phaser.Scene {
 		this.load.image('buttonAttackC', '/assets/images/elements/button_attack_c.png');
 		this.load.image('buttonAttackD', '/assets/images/elements/button_attack_d.png');
 		this.load.image('buttonAttackBack', '/assets/images/elements/button_attack_back.png');
+
+		// sounds
+		this.load.audio('soundButtonClick', '/assets/sounds/button_click.mp3');
 		// sounds player1
 		this.load.audio('soundAttack1', '/assets/sounds/supreme_attack_1.mp3');
 		this.load.audio('soundAttack2', '/assets/sounds/supreme_attack_2.mp3');
@@ -82,7 +92,7 @@ export class Bootloader extends Phaser.Scene {
 		this.load.audio('soundDeffense2', '/assets/sounds/supreme_deffense_2.mp3');
 		this.load.audio('soundDeffense3', '/assets/sounds/supreme_deffense_3.mp3');
 		this.load.audio('soundDeffense4', '/assets/sounds/supreme_deffense_4.mp3');
-		this.load.audio('soundButtonClick', '/assets/sounds/button_click.mp3');
+
 		// sounds enemy
 		this.load.audio('soundAttackE1', '/assets/sounds/supreme_attack_E1.mp3');
 		this.load.audio('soundAttackE2', '/assets/sounds/supreme_attack_E2.mp3');

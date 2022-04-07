@@ -22,6 +22,20 @@ height: 100vh;
 let center_width = this.sys.gme.config.width/2;
 let center_height = this.sys.gme.config.height/2;
 
+## eventos phaser de la pantalla
+
+const game = new Phaser.Game(config);
+
+game.scale.on(Phaser.Scale.Events.LEAVE_FULLSCREEN, () => {
+game.scale.scaleMode = Phaser.Scale.NONE;
+game.scale.autoCenter = Phaser.Scale.CENTER_HORIZONTALLY;
+});
+
+game.scale.on(Phaser.Scale.Events.ENTER_FULLSCREEN, () => {
+game.scale.scaleMode = Phaser.Scale.FIT;
+game.scale.autoCenter = Phaser.Scale.CENTER_BOTH;
+});
+
 # Scene Basic
 
 export class Game extends Phaser.Scene {
@@ -286,9 +300,10 @@ jungle.stop();
 
 jungle.pauseOnBlur = false; // si cambiamos de contexto, perdemos el foco del juego por defecto la música se pausa
 
-this.sound.stopAll(); // apra todos los sonidos que s eestén ejecutando
+this.sound.stopAll(); // para todos los sonidos que se estén ejecutando
 this.sound.pauseAll();
 this.sound.resumeAll();
+sonido.fadeTo(1000,0.8); // subir o bajar el volumen progresivamente de 0 a 0.8 por ejemplo
 
 jungle.rate = 1.1; // velocidad
 jungle.detune += 100; // tono
