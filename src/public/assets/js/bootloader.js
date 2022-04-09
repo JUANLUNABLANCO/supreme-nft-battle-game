@@ -67,8 +67,157 @@ export class Bootloader extends Phaser.Scene {
 		this.load.image('navbarDown', '/assets/images/elements/navbar_down.png');
 		this.load.image('panelTurn2', '/assets/images/elements/navbar_down_difuselogo_left.png');
 		this.load.image('panelTurn1', '/assets/images/elements/navbar_down_difuselogo_right.png');
+		this.load.image('panelInAction1', '/assets/images/elements/navbar_down_inaction_left.png');
+		this.load.image('panelInAction2', '/assets/images/elements/navbar_down_inaction_right.png');
 		this.load.image('navbarPower', '/assets/images/elements/navbar_power.png');
+		// ANIMS ##################################################################################
+		// chenzen -> 1 #############
+		// start ####################
+		this.load.spritesheet('1_start', '/assets/anims/01_chenzen/Start/anim_chenzen_start.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		// attacks ##################
+		this.load.spritesheet('1_atk_1', '/assets/anims/01_chenzen/Atk_1/anim_chenzen_atack_01.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		this.load.spritesheet('1_atk_2', '/assets/anims/01_chenzen/Atk_2/anim_chenzen_atack_02.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		this.load.spritesheet('1_atk_3', '/assets/anims/01_chenzen/Atk_3/anim_chenzen_atack_03.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		// deffense ####################
+		this.load.spritesheet('1_def_1', '/assets/anims/01_chenzen/Defense/anim_chenzen_deffense_01.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		// hurt ########################
+		this.load.spritesheet('1_hurt', '/assets/anims/01_chenzen/Hurt/anim_chenzen_hurt.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
 
+		// La D -> 2 #############
+		// start ####################
+		this.load.spritesheet('2_start', '/assets/anims/02_lad/Start/anim_lad_start.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		// attacks ##################
+		this.load.spritesheet('2_atk_1', '/assets/anims/02_lad/Atk_1/anim_lad_atack_01.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		this.load.spritesheet('2_atk_2', '/assets/anims/02_lad/Atk_2/anim_lad_atack_02.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		this.load.spritesheet('2_atk_3', '/assets/anims/02_lad/Atk_3/anim_lad_atack_03.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		// deffense ####################
+		this.load.spritesheet('2_def_1', '/assets/anims/02_lad/Defense/anim_lad_deffense_01.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		// FALTA hurt ########################
+		// this.load.spritesheet('2_hurt', '/assets/anims/02_lad/Hurt/anim_lad_hurt.png', {
+		// 	frameWidth: 450,
+		// 	frameHeight: 450,
+		// });
+
+		// MANNY -> 3 #############
+		// start ####################
+		this.load.spritesheet('3_start', '/assets/anims/03_manny/Start/anim_manny_start.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		// attacks ##################
+		this.load.spritesheet('3_atk_1', '/assets/anims/03_manny/Atk_1/anim_manny_atack_01.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		this.load.spritesheet('3_atk_1r', '/assets/anims/03_manny/Atk_1/anim_manny_atack_01_reverse.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		this.load.spritesheet('3_atk_2', '/assets/anims/03_manny/Atk_2/anim_manny_atack_02.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		this.load.spritesheet('3_atk_3', '/assets/anims/03_manny/Atk_3/anim_manny_atack_03.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		// deffense ####################
+		this.load.spritesheet('3_def_1', '/assets/anims/03_manny/Defense/anim_manny_deffense_01.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		// FALTA hurt ########################
+		// this.load.spritesheet('3_hurt', '/assets/anims/03_manny/Hurt/anim_manny_hurt.png', {
+		// 	frameWidth: 450,
+		// 	frameHeight: 450,
+		// });
+
+		// lempereur -> 4
+		// start ####################
+		this.load.spritesheet('4_start', '/assets/anims/04_lempereur/Start/anim_lempereur_start.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		// attacks ##################
+		this.load.spritesheet('4_atk_1', '/assets/anims/04_lempereur/Atk_1/anim_lempereur_atack_01.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		this.load.spritesheet('4_atk_2', '/assets/anims/04_lempereur/Atk_2/anim_lempereur_atack_02.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		this.load.spritesheet('4_atk_3', '/assets/anims/04_lempereur/Atk_3/anim_lempereur_atack_03.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		// deffense ####################
+		this.load.spritesheet('4_def_1', '/assets/anims/04_lempereur/Defense/anim_lempereur_deffense_01.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+		// hurt ########################
+		this.load.spritesheet('4_hurt', '/assets/anims/04_lempereur/Hurt/anim_lempereur_hurt.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
+
+		// FX ANIMNS SOUNDS
+		// fx deffenese same for all
+		this.load.audio('fx_all_deffense', '/assets/anims/sound_all_deffense.mp3');
+		// 1 chenzen
+		this.load.audio('fx_1_atk_1', '/assets/anims/01_chenzen/Atk_1/sound_chenzen_atack_01.mp3');
+		this.load.audio('fx_1_atk_2', '/assets/anims/01_chenzen/Atk_2/sound_chenzen_atack_02.mp3');
+		this.load.audio('fx_1_atk_3', '/assets/anims/01_chenzen/Atk_3/sound_chenzen_atack_03.mp3');
+		this.load.audio('fx_1_start', '/assets/anims/01_chenzen/Start/sound_chenzen_start.mp3');
+		// 2 lad
+		this.load.audio('fx_2_atk_1', '/assets/anims/02_lad/Atk_1/sound_lad_atack_01.mp3');
+		this.load.audio('fx_2_atk_2', '/assets/anims/02_lad/Atk_2/sound_lad_atack_02.mp3');
+		this.load.audio('fx_2_atk_3', '/assets/anims/02_lad/Atk_3/sound_lad_atack_03.mp3');
+		this.load.audio('fx_2_start', '/assets/anims/02_lad/Start/sound_lad_start.mp3');
+		// 3 manny
+		this.load.audio('fx_3_atk_1', '/assets/anims/03_manny/Atk_1/sound_manny_atack_01.mp3');
+		this.load.audio('fx_3_atk_2', '/assets/anims/03_manny/Atk_2/sound_manny_atack_02.mp3');
+		this.load.audio('fx_3_atk_3', '/assets/anims/03_manny/Atk_3/sound_manny_atack_03.mp3');
+		this.load.audio('fx_3_start', '/assets/anims/03_manny/Start/sound_manny_start.mp3');
+
+		this.load.audio('fx_4_atk_1', '/assets/anims/04_lempereur/Atk_1/sound_lempereur_atack_01.mp3');
+		this.load.audio('fx_4_atk_2', '/assets/anims/04_lempereur/Atk_2/sound_lempereur_atack_02.mp3');
+		this.load.audio('fx_4_atk_3', '/assets/anims/04_lempereur/Atk_3/sound_lempereur_atack_03.mp3');
+		this.load.audio('fx_4_start', '/assets/anims/04_lempereur/Start/sound_lempereur_start.mp3');
 		// buttons and elements of menu
 		this.load.image('button', '/assets/images/elements/standard_button.png');
 		this.load.image('buttonAttack', '/assets/images/elements/button_attack.png');
