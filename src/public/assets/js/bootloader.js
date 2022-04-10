@@ -12,6 +12,10 @@ export class Bootloader extends Phaser.Scene {
 		canvas.style.height = WindowHeight + 'px';
 		html.style.overflow = 'hidden';
 		console.log('resized window');
+
+		// this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+		// this.scale.pageAlignHorizontally = true;
+		// this.scale.pageAlignVertically = true;
 	}
 	// orientation() {
 	// 	// orientation
@@ -50,7 +54,8 @@ export class Bootloader extends Phaser.Scene {
 		this.load.audio('selectplayerMusic', '/assets/mp3/supreme_base02_battle.mp3');
 		this.load.audio('gameoverMusic', '/assets/mp3/supreme_base03_gameover.mp3');
 		this.load.audio('winMusic', '/assets/mp3/supreme_base04_gamewin.mp3');
-		this.load.audio('rapperSelected', '/assets/sounds/rapperSelected.mp3');
+		this.load.audio('rapperSelected', '/assets/sounds/rapperSelected.wav');
+		this.load.audio('soundButtonClick', '/assets/sounds/button_click.wav');
 		// this.load.audio('rappersFallDawn', '/assets/sounds/rappersFallDawn.wav');
 		this.load.audio('soundGameover', '/assets/sounds/gameover.mp3');
 		this.load.audio('soundWin', '/assets/sounds/victory.wav');
@@ -224,33 +229,24 @@ export class Bootloader extends Phaser.Scene {
 		this.load.image('buttonDefense', '/assets/images/elements/button_defense.png');
 		this.load.image('buttonGiveup', '/assets/images/elements/button_giveup.png');
 		// buttons attack
-		this.load.image('buttonAttackA', '/assets/images/elements/button_attack_a.png');
-		this.load.image('buttonAttackB', '/assets/images/elements/button_attack_b.png');
-		this.load.image('buttonAttackC', '/assets/images/elements/button_attack_c.png');
-		this.load.image('buttonAttackD', '/assets/images/elements/button_attack_d.png');
+		this.load.image('btn_1_atk_a', '/assets/images/elements/button_1_attack_a.png');
+		this.load.image('btn_1_atk_b', '/assets/images/elements/button_1_attack_b.png');
+		this.load.image('btn_1_atk_c', '/assets/images/elements/button_1_attack_c.png');
+		this.load.image('btn_1_def_a', '/assets/images/elements/button_1_deffense_a.png');
+		this.load.image('btn_2_atk_a', '/assets/images/elements/button_2_attack_a.png');
+		this.load.image('btn_2_atk_b', '/assets/images/elements/button_2_attack_b.png');
+		this.load.image('btn_2_atk_c', '/assets/images/elements/button_2_attack_c.png');
+		this.load.image('btn_2_def_a', '/assets/images/elements/button_2_deffense_a.png');
+		this.load.image('btn_3_atk_a', '/assets/images/elements/button_3_attack_a.png');
+		this.load.image('btn_3_atk_b', '/assets/images/elements/button_3_attack_b.png');
+		this.load.image('btn_3_atk_c', '/assets/images/elements/button_3_attack_c.png');
+		this.load.image('btn_3_def_a', '/assets/images/elements/button_3_deffense_a.png');
+		this.load.image('btn_4_atk_a', '/assets/images/elements/button_4_attack_a.png');
+		this.load.image('btn_4_atk_b', '/assets/images/elements/button_4_attack_b.png');
+		this.load.image('btn_4_atk_c', '/assets/images/elements/button_4_attack_c.png');
+		this.load.image('btn_4_def_a', '/assets/images/elements/button_4_deffense_a.png');
 		this.load.image('buttonAttackBack', '/assets/images/elements/button_attack_back.png');
 
-		// sounds
-		this.load.audio('soundButtonClick', '/assets/sounds/button_click.mp3');
-		// sounds player1
-		this.load.audio('soundAttack1', '/assets/sounds/supreme_attack_1.mp3');
-		this.load.audio('soundAttack2', '/assets/sounds/supreme_attack_2.mp3');
-		this.load.audio('soundAttack3', '/assets/sounds/supreme_attack_3.mp3');
-		this.load.audio('soundAttack4', '/assets/sounds/supreme_attack_4.mp3');
-		this.load.audio('soundDeffense1', '/assets/sounds/supreme_deffense_1.mp3');
-		this.load.audio('soundDeffense2', '/assets/sounds/supreme_deffense_2.mp3');
-		this.load.audio('soundDeffense3', '/assets/sounds/supreme_deffense_3.mp3');
-		this.load.audio('soundDeffense4', '/assets/sounds/supreme_deffense_4.mp3');
-
-		// sounds enemy
-		this.load.audio('soundAttackE1', '/assets/sounds/supreme_attack_E1.mp3');
-		this.load.audio('soundAttackE2', '/assets/sounds/supreme_attack_E2.mp3');
-		this.load.audio('soundAttackE3', '/assets/sounds/supreme_attack_E3.mp3');
-		this.load.audio('soundAttackE4', '/assets/sounds/supreme_attack_E4.mp3');
-		this.load.audio('soundDeffenseE1', '/assets/sounds/supreme_deffense_E1.mp3');
-		this.load.audio('soundDeffenseE2', '/assets/sounds/supreme_deffense_E2.mp3');
-		this.load.audio('soundDeffenseE3', '/assets/sounds/supreme_deffense_E3.mp3');
-		this.load.audio('soundDeffenseE4', '/assets/sounds/supreme_deffense_E4.mp3');
 		// ########## Battle scene #############################################
 		// ########## WIN scene ################################################
 		this.load.image('win', '/assets/images/win_1920x1080.jpg');

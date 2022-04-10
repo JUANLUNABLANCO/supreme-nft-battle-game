@@ -1,0 +1,26 @@
+CHENZEN : 1
+Atk1 : Frappe fantôme
+Atk2 : Potion de lean
+Atk3 : Polémique
+Defense : Défense
+
+LA D : 2
+Atk1 : Cri strident
+Atk2 : La vie d'artiste
+Atk3 : Paintball
+Defense : Défense
+
+MANNY : 3
+Atk1 : Okay
+Atk2 : vodka-cerise
+Atk3 : vole petit pélican
+Defense : Défense
+
+L'EMPEREUR : 4
+Atk1 : Injure
+Atk2 : Nuage de fumée 
+Atk3 : Super lancer 
+Defense : Défense
+
+
+
