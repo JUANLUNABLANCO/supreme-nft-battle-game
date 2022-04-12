@@ -8,6 +8,7 @@ __RESOURCES__
 MY-README.md
 GAME-README.md
 GAME-README-ADVANCE.md
+VPS-README.md
 .env
 # Node artifact files
 node_modules/
