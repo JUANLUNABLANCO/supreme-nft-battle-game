@@ -30,11 +30,11 @@ export class SelectPlayer extends Phaser.Scene {
 		// this.rappersFallDawn = this.sound.add('rappersFallDawn');
 		// this.rappersFallDawn.play();
 
-		this.selectplayerMusic = this.sound.add('selectplayerMusic');
+		this.mainMusic = this.sound.add('mainMusic');
 		setTimeout(() => {
-			this.selectplayerMusic.play();
+			this.mainMusic.play({ loop: true });
 		}, 1000);
-		this.selectplayerMusic.pauseOnBlur = false; // no se pausa cuando pierde el foco, no me funciona
+		this.mainMusic.pauseOnBlur = false; // no se pausa cuando pierde el foco, no me funciona
 
 		this.selectedplayerBackground = this.add.image(0, 0, 'background');
 		this.selectedplayerBackground.setOrigin(0, 0);
@@ -96,14 +96,14 @@ export class SelectPlayer extends Phaser.Scene {
 	// update() {}
 
 	textsMaker() {
-		this.p1XpText = this.add.text(320, 200, 'SELECT PLAYER PLEASE', {
+		this.p1XpText = this.add.text(120, 200, 'SÉLECTIONNER UN JOUEUR SVP', {
 			fontSize: '60px',
 			fill: '#fff',
 			fontFamily: 'Public Pixel, arial, sans-serif',
 		});
 	}
 	selectPlayers(rapperSelected) {
-		this.selectplayerMusic.stop();
+		// this.selectplayerMusic.stop();
 		this.rapperSelected.play({ loop: false });
 		console.log(rapperSelected);
 		this.player1 = rapperSelected;

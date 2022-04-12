@@ -24,7 +24,7 @@ export class Main extends Phaser.Scene {
 	}
 	create() {
 		this.mainMusic = this.sound.add('mainMusic');
-		this.mainMusic.play();
+		this.mainMusic.play({ loop: true });
 		this.mainMusic.pauseOnBlur = false;
 		// background
 		this.mainBackground = this.add.image(0, 0, 'mainBackground');

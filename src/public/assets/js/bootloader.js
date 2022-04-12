@@ -51,7 +51,7 @@ export class Bootloader extends Phaser.Scene {
 
 		// this.load.audio('orlaMove', '/assets/sounds/orlaMove.mp3');
 		this.load.audio('mainMusic', '/assets/mp3/supreme_base01_main.mp3');
-		this.load.audio('selectplayerMusic', '/assets/mp3/supreme_base02_battle.mp3');
+		this.load.audio('battleMusic', '/assets/mp3/supreme_base02_battle.mp3');
 		this.load.audio('gameoverMusic', '/assets/mp3/supreme_base03_gameover.mp3');
 		this.load.audio('winMusic', '/assets/mp3/supreme_base04_gamewin.mp3');
 		this.load.audio('rapperSelected', '/assets/sounds/rapperSelected.wav');
@@ -131,10 +131,10 @@ export class Bootloader extends Phaser.Scene {
 			frameHeight: 450,
 		});
 		// FALTA hurt ########################
-		// this.load.spritesheet('2_hurt', '/assets/anims/02_lad/Hurt/anim_lad_hurt.png', {
-		// 	frameWidth: 450,
-		// 	frameHeight: 450,
-		// });
+		this.load.spritesheet('2_hurt', '/assets/anims/02_lad/Hurt/anim_lad_hurt.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
 
 		// MANNY -> 3 #############
 		// start ####################
@@ -165,10 +165,10 @@ export class Bootloader extends Phaser.Scene {
 			frameHeight: 450,
 		});
 		// FALTA hurt ########################
-		// this.load.spritesheet('3_hurt', '/assets/anims/03_manny/Hurt/anim_manny_hurt.png', {
-		// 	frameWidth: 450,
-		// 	frameHeight: 450,
-		// });
+		this.load.spritesheet('3_hurt', '/assets/anims/03_manny/Hurt/anim_manny_hurt.png', {
+			frameWidth: 450,
+			frameHeight: 450,
+		});
 
 		// lempereur -> 4
 		// start ####################
@@ -199,6 +199,10 @@ export class Bootloader extends Phaser.Scene {
 			frameWidth: 450,
 			frameHeight: 450,
 		});
+		// projectiles
+		this.load.image('lempereur_injure', '/assets/anims/projectiles/lempereur_injure.png');
+		this.load.image('lempereur_sword', '/assets/anims/projectiles/lempereur_sword.png');
+		this.load.image('manny_bird', '/assets/anims/projectiles/manny_bird.png');
 
 		// FX ANIMNS SOUNDS
 		// fx deffenese same for all

@@ -64,8 +64,10 @@ export class Battle extends Phaser.Scene {
 			],
 		];
 
-		this.musicDelayPlayer1 = [0, 10000, 10000, 12000, 15000, 10000, 10000, 12000, 12000];
-		this.musicDelaysEnemy = [0, 15000, 15000, 22000, 18000, 26000, 12000, 23000, 14000];
+		// DELAY ANIMATIONS ##########################################
+		// hacerlo por repero, cada animacion dura diferente
+		this.actionDelayPlayer1 = [3000, 2000, 2000, 2000, 2000, 2000];
+		this.actionDelayPlayer2 = [6000, 2000, 2000, 2000, 2000, 2000];
 		// variables here
 		this.habilities = ['hurl insults', 'xtreme velocity', 'super rhymes', ' high level rap', 'desmoralize'];
 		this.habilitiesCoef = [2.5, 3.5, 4, 2.2, 3];
@@ -101,8 +103,8 @@ export class Battle extends Phaser.Scene {
 			// endFrames[`${this.player1}`].start
 			{},
 			{ start: 37, atk_1: 33, atk_2: 40, atk_3: 65, def_1: 13, hurt: 11 },
-			{ start: 66, atk_1: 53, atk_2: 50, atk_3: 51, def_1: 13, hurt: 0 },
-			{ start: 36, atk_1: 19, atk_2: 44, atk_3: 40, def_1: 13, hurt: 0 },
+			{ start: 66, atk_1: 53, atk_2: 50, atk_3: 51, def_1: 13, hurt: 13 },
+			{ start: 36, atk_1: 19, atk_2: 44, atk_3: 40, def_1: 13, hurt: 13 },
 			{ start: 43, atk_1: 39, atk_2: 46, atk_3: 43, def_1: 13, hurt: 11 },
 		];
 
@@ -128,9 +130,14 @@ export class Battle extends Phaser.Scene {
 		console.log(`/assets/images/characters/${this.player1}.png`);
 		console.log(`/assets/images/characters/${this.player2}.png`);
 		this.sound.stopAll();
+		this.battleMusic = this.sound.add('battleMusic');
 	}
 	create() {
 		// /* ##### sounds */
+		setTimeout(() => {
+			this.battleMusic.play({ loop: true, volume: 0.2 });
+		}, 1000);
+		this.battleMusic.pauseOnBlur = false;
 		this.soundButtonClick = this.sound.add('soundButtonClick');
 		// menu sounds
 
@@ -145,354 +152,56 @@ export class Battle extends Phaser.Scene {
 		this.playCharacter1 = this.physics.add.sprite(460, 100, `${this.player1}_start`);
 		this.playCharacter1.setBounce(0.2);
 		this.playCharacter1.flipX = true;
-		this.playCharacter2 = this.physics.add.sprite(1360, 500, `${this.player2}_start`);
+		this.playCharacter2 = this.physics.add.sprite(1360, 100, `${this.player2}_start`);
 		this.playCharacter2.setBounce(0.3);
-		/** #### anims */
-		/** 1_ChenZen */
 		// fisica colisiones
 		this.physics.add.collider(this.playCharacter1, this.platform); // ahora chocaran
 		this.physics.add.collider(this.playCharacter2, this.platform); // ahora chocaran
+		// projectiles
+		// manny
+		if (this.player1 == 3) {
+			this.manny1_bird = this.physics.add.image(910, 500, 'manny_bird').setVisible(false);
+			this.physics.add.collider(this.manny1_bird, this.platform);
+		}
+		if (this.player2 == 3) {
+			this.manny2_bird = this.physics.add.image(685, 500, 'manny_bird').setVisible(false);
+			this.manny2_bird.flipX = true;
+			this.physics.add.collider(this.manny2_bird, this.platform);
+		}
+		// alcapote
+		if (this.player1 == 4) {
+			this.lempereur1_injure = this.physics.add.image(950, 500, 'lempereur_injure').setVisible(false);
+			this.physics.add.collider(this.lempereur1_injure, this.platform);
+			this.lempereur1_sword = this.physics.add.image(910, 500, 'lempereur_sword').setVisible(false);
+			this.physics.add.collider(this.lempereur1_sword, this.platform);
+		}
+		if (this.player2 == 4) {
+			this.lempereur2_injure = this.physics.add.image(1080, 500, 'lempereur_injure').setVisible(false);
+			this.lempereur2_injure.flipX = true;
+			this.physics.add.collider(this.lempereur2_injure, this.platform);
+			this.lempereur2_sword = this.physics.add.image(1080, 500, 'lempereur_sword').setVisible(false);
+			this.lempereur2_sword.flipX = true;
+			this.physics.add.collider(this.lempereur2_sword, this.platform);
+		}
 
-		// FX anims sounds
-		// this.fx_p1_start = this.sound.add(`fx_${this.player1}_start`);
-		// this.fx_p1_atk_1 = this.sound.add(`fx_${this.player1}_atk_1`);
-		// this.fx_p1_atk_2 = this.sound.add(`fx_${this.player1}_atk_2`);
-		// this.fx_p1_atk_3 = this.sound.add(`fx_${this.player1}_atk_3`);
-		// this.fx_p1_deffense_1 = this.sound.add(`fx_all_deffense`);
-		// this.fx_p2_start = this.sound.add(`fx_${this.player2}_start`);
-		// this.fx_p2_atk_1 = this.sound.add(`fx_${this.player2}_atk_1`);
-		// this.fx_p2_atk_2 = this.sound.add(`fx_${this.player2}_atk_2`);
-		// this.fx_p2_atk_3 = this.sound.add(`fx_${this.player2}_atk_3`);
-		// this.fx_p2_deffense_1 = this.sound.add(`fx_all_deffense`);
-		// ANIMS
-		// #### player1_attack_1
-
-		// CHARGING ANIMATIONS AND PLAYING ANIMATION START
-		this.loadAnims();
+		// CHARGING ANIMATIONS AND PLAYING ANIMATION START ##########
+		this.createAnims();
 		this.startAnims();
 
-		// this.playCharacter2.play('player2_start');
+		// AMBIENT ###########
+		this.createMicros();
 
-		/** ##### others elements */
-		this.micro1 = this.add.image(700, -500, 'micro1');
-		this.micro2 = this.add.image(1200, -700, 'micro2');
-		this.micro1.setDataEnabled();
-		this.micro1.data.set('position', 'down');
-		this.micro2.setDataEnabled();
-		this.micro2.data.set('position', 'down');
+		this.createProgressBars();
 
-		/** ###### progress bars top */
-		this.navbarPowerP1 = this.add.image(360, 60, 'navbarPower'); //navbarPower
-		this.navbarPowerP2 = this.add.image(1550, 60, 'navbarPower'); //navbarPower
-		// NAMES rappers
-		this.add.text(32, 32, this.player1Name, {
-			fontSize: '20px',
-			fill: '#000000',
-			fontFamily: 'Public Pixel, verdana, arial, sans-serif',
-		});
-		this.add.text(1226, 32, this.player2Name, {
-			fontSize: '20px',
-			fill: '#000000',
-			fontFamily: 'Public Pixel, verdana, arial, sans-serif',
-		});
-		// PROGRESS BARS
-		this.p1PowerText = this.add.text(600, 65, '', {
-			fontSize: '20px',
-			fill: '#000',
-			fontFamily: 'verdana, arial, sans-serif',
-		});
-		this.p2PowerText = this.add.text(1790, 65, '', {
-			fontSize: '20px',
-			fill: '#000',
-			fontFamily: 'verdana, arial, sans-serif',
-		});
-		// the progress bar and update text of power/500
-		this.progressbarsPowerMaker();
+		this.createMenuInitP1();
 
-		/* ##### nav bar menu Down */
-		this.navbarDown = this.add.image(960, 870, 'navbarDown'); //navbarPower
-		// textos iniciales
-		this.p1TextAction = this.add.text(550, 800, 'UHMM!', {
-			fontSize: '20px',
-			fill: '#000000',
-			fontFamily: 'verdana, arial, sans-serif',
-		});
-		this.p2TextAction = this.add.text(980, 800, 'Cop Cop!', {
-			fontSize: '20px',
-			fill: '#000000',
-			fontFamily: 'verdana, arial, sans-serif',
-		});
+		this.createMenuAttackP1();
 
-		// MENUINIT P1 ######################################
-		this.menuP1Init = this.add.container(0, 0);
+		this.createMenuDeffenseP1();
+		// enemy menu
+		this.createMenuEnemy();
 
-		this.btnAttack = this.add.sprite(20, 792, 'buttonAttack').setOrigin(0, 0).setInteractive();
-		this.btnDefense = this.add.sprite(20, 844, 'buttonDefense').setOrigin(0, 0).setInteractive();
-		this.btnGiveup = this.add.sprite(20, 896, 'buttonGiveup').setOrigin(0, 0).setInteractive(); // .setInteractive(true)
-		this.menuP1Init.add([this.btnAttack, this.btnDefense, this.btnGiveup]);
-
-		this.menuP1Init.setVisible(false);
-		let items = this.menuP1Init.list;
-		items.map((item) => {
-			item.on('pointerover', function (event) {
-				// console.log('over');
-				this.setTint(0xcacaca);
-			});
-			item.on('pointerout', function (event) {
-				// console.log('out');
-				this.setTint(0xffffff);
-			});
-		});
-
-		this.btnAttack.on(
-			'pointerup',
-			function (pointer) {
-				// DEBUG console.log(pointer);
-				if (this.turn == 1) {
-					this.soundButtonClick.play();
-					// ######## click BUTTON ATTACK ######
-					this.openMenuAttackP1();
-				}
-			},
-			this
-		);
-		this.btnDefense.on(
-			'pointerup',
-			function (pointer) {
-				// DEBUG console.log(pointer);
-				if (this.turn == 1) {
-					this.soundButtonClick.play();
-					// ######## click BUTTON ATTACK ######
-					this.openMenuDeffenseP1();
-				}
-			},
-			this
-		);
-		this.btnGiveup.on(
-			'pointerup',
-			function (pointer) {
-				this.soundButtonClick.play();
-				// ######## click BUTTON ATTACK ######
-				this.scene.start('Main');
-				// this.scene.stop('Battle');
-			},
-			this
-		);
-		// MENUATTACK P1 ####################################
-		this.menuP1Attack = this.add.container(0, 0);
-
-		this.btnAttackA = this.add.sprite(20, 792, `btn_${this.player1}_atk_a`).setOrigin(0, 0).setInteractive();
-		this.btnAttackB = this.add.sprite(268, 792, `btn_${this.player1}_atk_b`).setOrigin(0, 0).setInteractive(); // .setInteractive(true)
-		this.btnAttackC = this.add.sprite(20, 844, `btn_${this.player1}_atk_c`).setOrigin(0, 0).setInteractive();
-		// texto de los botones
-
-		// this.btnAttackD = this.add.sprite(268, 844, 'buttonAttackD').setOrigin(0, 0).setInteractive(); // .setInteractive(true)
-		this.btnAttackBack = this.add.sprite(20, 896, 'buttonAttackBack').setOrigin(0, 0).setInteractive(); // .setInteractive(true)
-		this.menuP1Attack.add([this.btnAttackA, this.btnAttackB, this.btnAttackC, this.btnAttackBack]);
-
-		this.menuP1Attack.setVisible(false);
-		let items2 = this.menuP1Attack.list;
-		items2.map((item) => {
-			item.on('pointerover', function (event) {
-				// console.log('over');
-				this.setTint(0xcacaca);
-			});
-			item.on('pointerout', function (event) {
-				// console.log('out');
-				this.setTint(0xffffff);
-			});
-		});
-
-		this.btnAttackA.on(
-			'pointerup',
-			function (pointer) {
-				// DEBUG console.log(pointer);
-				if (this.turn == 1) {
-					// this.panelLogoLeft.setVisible(true);
-					this.soundButtonClick.play();
-					// ######## click BUTTON ATTACK ######
-					console.log('attack A');
-					let delay = this.musicDelayPlayer1[1];
-					this.attackP1Selected('A', delay);
-				}
-			},
-			this
-		);
-		this.btnAttackB.on(
-			'pointerup',
-			function (pointer) {
-				// DEBUG console.log(pointer);
-				if (this.turn == 1) {
-					// this.panelLogoLeft.setVisible(true);
-					this.soundButtonClick.play();
-					// ######## click BUTTON ATTACK ######
-					console.log('attack B');
-					let delay = this.musicDelayPlayer1[2];
-					this.attackP1Selected('B', delay);
-				}
-			},
-			this
-		);
-		this.btnAttackC.on(
-			'pointerup',
-			function (pointer) {
-				// DEBUG console.log(pointer);
-				if (this.turn == 1) {
-					// this.panelLogoLeft.setVisible(true);
-					this.soundButtonClick.play();
-					// ######## click BUTTON ATTACK ######
-					console.log('attack C');
-					let delay = this.musicDelayPlayer1[3];
-					this.attackP1Selected('C', delay);
-				}
-			},
-			this
-		);
-		// this.btnAttackD.on(
-		// 	'pointerup',
-		// 	function (pointer) {
-		// 		// DEBUG console.log(pointer);
-		// 		if (this.turn == 1) {
-		// 			this.soundButtonClick.play();
-		// 			// ######## click BUTTON ATTACK ######
-		// 			console.log('attack D');
-		// 			let delay = this.musicDelayPlayer1[4];
-		// 			this.attackP1Selected('D', delay);
-		// 		}
-		// 	},
-		// 	this
-		// );
-		this.btnAttackBack.on(
-			'pointerup',
-			function (pointer) {
-				if (this.turn == 1) {
-					this.soundButtonClick.play();
-					console.log('attack go back');
-					this.menuP1Attack.setVisible(false);
-					this.menuP1Deffense.setVisible(false);
-					this.panelInactionLeft.setVisible(false);
-					this.menuP1Init.setVisible(true);
-				}
-			},
-			this
-		);
-		// MENUDEFENSE P1 ###################################
-		this.menuP1Deffense = this.add.container(0, 0);
-
-		this.btnDeffenseA = this.add.sprite(20, 792, `btn_${this.player1}_def_a`).setOrigin(0, 0).setInteractive();
-		// this.btnDeffenseB = this.add.sprite(20, 844, 'buttonAttackB').setOrigin(0, 0).setInteractive();
-		// this.btnDeffenseC = this.add.sprite(268, 792, 'buttonAttackC').setOrigin(0, 0).setInteractive(); // .setInteractive(true)
-		// this.btnDeffenseD = this.add.sprite(268, 844, 'buttonAttackD').setOrigin(0, 0).setInteractive(); // .setInteractive(true)
-		// texto de los botones
-
-		this.btnDeffenseBack = this.add.sprite(20, 896, 'buttonAttackBack').setOrigin(0, 0).setInteractive(); // .setInteractive(true)
-		this.menuP1Deffense.add([
-			this.btnDeffenseA,
-			// this.btnDeffenseB,
-			// this.btnDeffenseC,
-			// this.btnDeffenseD,
-			this.btnDeffenseBack,
-		]);
-
-		this.menuP1Deffense.setVisible(false);
-		let items3 = this.menuP1Deffense.list;
-		items3.map((item) => {
-			item.on('pointerover', function (event) {
-				// console.log('over');
-				this.setTint(0xcacaca);
-			});
-			item.on('pointerout', function (event) {
-				// console.log('out');
-				this.setTint(0xffffff);
-			});
-		});
-
-		this.btnDeffenseA.on(
-			'pointerup',
-			function (pointer) {
-				// DEBUG console.log(pointer);
-				if (this.turn == 1) {
-					// this.panelLogoLeft.setVisible(true);
-					this.soundButtonClick.play();
-					// ######## click BUTTON ATTACK ######
-					console.log('deffense A');
-					let delay = this.musicDelayPlayer1[5];
-					this.deffenseP1Selected('A', delay);
-				}
-			},
-			this
-		);
-		// this.btnDeffenseB.on(
-		// 	'pointerup',
-		// 	function (pointer) {
-		// 		// DEBUG console.log(pointer);
-		// 		if (this.turn == 1) {
-		// 			this.soundButtonClick.play();
-		// 			// ######## click BUTTON ATTACK ######
-		// 			console.log('deffense B');
-		// 			let delay = this.musicDelayPlayer1[6];
-		// 			this.deffenseP1Selected('B', delay);
-		// 		}
-		// 	},
-		// 	this
-		// );
-		// this.btnDeffenseC.on(
-		// 	'pointerup',
-		// 	function (pointer) {
-		// 		// DEBUG console.log(pointer);
-		// 		if (this.turn == 1) {
-		// 			this.soundButtonClick.play();
-		// 			// ######## click BUTTON ATTACK ######
-		// 			console.log('deffense C');
-		// 			let delay = this.musicDelayPlayer1[7];
-		// 			this.deffenseP1Selected('C', delay);
-		// 		}
-		// 	},
-		// 	this
-		// );
-		// this.btnDeffenseD.on(
-		// 	'pointerup',
-		// 	function (pointer) {
-		// 		// DEBUG console.log(pointer);
-		// 		if (this.turn == 1) {
-		// 			this.soundButtonClick.play();
-		// 			// ######## click BUTTON ATTACK ######
-		// 			console.log('deffense D');
-		// 			let delay = this.musicDelayPlayer1[8];
-		// 			this.deffenseP1Selected('D', delay);
-		// 		}
-		// 	},
-		// 	this
-		// );
-		this.btnDeffenseBack.on(
-			'pointerup',
-			function (pointer) {
-				if (this.turn == 1) {
-					this.soundButtonClick.play();
-					console.log('attack go back');
-					this.menuP1Attack.setVisible(false);
-					this.menuP1Deffense.setVisible(false);
-					this.menuP1Init.setVisible(true);
-				}
-			},
-			this
-		);
-		// MENU ENENMY ##########################################################
-		this.menuP2 = this.add.group();
-		this.btn_p2_attack = this.add.sprite(1400, 792, 'buttonAttack').setOrigin(0, 0);
-		this.btn_p2_deffense = this.add.sprite(1400, 844, 'buttonDefense').setOrigin(0, 0);
-
-		this.menuP2.add(this.btn_p2_attack);
-		this.menuP2.add(this.btn_p2_deffense);
-		// MENU ENENMY ##########################################################
-		// PANELS TURN1 TURN2
-		this.panelLogoLeft = this.add.image(480, 870, 'panelTurn2').setVisible(false);
-		this.panelLogoRight = this.add.image(1440, 870, 'panelTurn1').setVisible(false);
-		this.panelInactionLeft = this.add.image(480, 870, 'panelInAction1').setVisible(false);
-		this.panelInactionRight = this.add.image(480, 870, 'panelInAction2').setVisible(false);
-		// PANELS TURN1 TURN2
-
-		// TODO after clicking a button start
+		// BEGINROUND  ############
 		this.beginRound();
 	}
 
@@ -511,7 +220,7 @@ export class Battle extends Phaser.Scene {
 		}
 	}
 	// BATTLE LOAD ANIMS
-	loadAnims() {
+	createAnims() {
 		// #### player1_start
 		console.log('IN ANIM CREATE: p1', this.player1);
 		console.log('IN ANIM CREATE: p2', this.player2);
@@ -579,14 +288,15 @@ export class Battle extends Phaser.Scene {
 			repeat: 0,
 		});
 		// #### player1_hurt
-		// this.anims.create({
-		// 	key: 'player1_hurt',
-		// 	frameRate: 25,
-		// 	frames: this.anims.generateFrameNumbers(`${this.player1}_hurt`, {
-		// start: 0,
-		// end: this.endFrames[`${this.player1}`].hurt }),
-		// 	repeat: 0,
-		// });
+		this.anims.create({
+			key: 'player1_hurt',
+			frameRate: 25,
+			frames: this.anims.generateFrameNumbers(`${this.player1}_hurt`, {
+				start: 0,
+				end: this.endFrames[`${this.player1}`].hurt,
+			}),
+			repeat: 0,
+		});
 
 		// #### player2_start
 		this.anims.create({
@@ -652,81 +362,193 @@ export class Battle extends Phaser.Scene {
 			repeat: 0,
 		});
 		// #### player2_hurt
-		// this.anims.create({
-		// 	key: 'player2_hurt',
-		// 	frameRate: 25,
-		// 	frames: this.anims.generateFrameNumbers(`${this.player2}_hurt`, {
-		// start: 0,
-		// end: this.endFrames[`${this.player2}`].hurt }),
-		// 	repeat: 0,
-		// });
+		this.anims.create({
+			key: 'player2_hurt',
+			frameRate: 25,
+			frames: this.anims.generateFrameNumbers(`${this.player2}_hurt`, {
+				start: 0,
+				end: this.endFrames[`${this.player2}`].hurt,
+			}),
+			repeat: 0,
+		});
 
-		// SOUNDS player 01
+		// PLAYER 1 ANIMATIONS START
 		this.playCharacter1.on('animationstart', (animation) => {
 			console.log('animation start P1');
 			// console.log(animation);
 			if (animation.key == 'player1_start') {
 				this.fx_p1_start.play();
-			} else if (animation.key == 'player1_attack_1' && this.player1 == 1) {
-				this.playCharacter1.setVelocityX(600);
+			} else if (animation.key == 'player1_attack_1') {
 				this.fx_p1_atk_1.play();
-			} else if (animation.key == 'player1_attack_1' && this.player1 != 1) {
-				this.fx_p1_atk_1.play();
+				// CHENZEN 'FRAPPE FANTOME'
+				if (this.player1 == 1) {
+					this.playCharacter1.setVelocityX(600);
+				}
+				// ALCAPOTE 'INJURE' _injure
+				if (this.player1 == 4) {
+					this.timedEvent = this.time.addEvent({
+						delay: 300,
+						callback: () => {
+							this.lempereur1_injure.setVisible(true);
+							this.lempereur1_injure.setVelocityX(800);
+						},
+					});
+				}
 			} else if (animation.key == 'player1_attack_2') {
 				this.fx_p1_atk_2.play();
 			} else if (animation.key == 'player1_attack_3') {
 				this.fx_p1_atk_3.play();
+				// MANNY 'VOLE PELICAN' _bird
+				if (this.player1 == 3) {
+					this.timedEvent = this.time.addEvent({
+						delay: 800,
+						callback: () => {
+							this.manny1_bird.setVisible(true);
+							this.manny1_bird.setVelocityX(800);
+						},
+					});
+				}
+				// ALCAPOTE 'SUPER LANCER' _sword
+				if (this.player1 == 4) {
+					this.timedEvent = this.time.addEvent({
+						delay: 1000,
+						callback: () => {
+							this.lempereur1_sword.setVisible(true);
+							this.lempereur1_sword.setVelocityX(1000);
+						},
+					});
+				}
 			} else if (animation.key == 'player1_deffense_1') {
 				this.fx_p1_deffense_1.play();
 			}
 
 			// play sound animation
 		});
+		// PLAYER 1 ANIMATIONS COMPLETE
 		this.playCharacter1.on('animationcomplete', (animation) => {
 			console.log('animation finish P1');
-			if (animation.key == 'player1_attack_1' && this.player1 == 1) {
-				this.playCharacter1.setVelocityX(0);
-				this.playCharacter1.setPosition(460, this.playCharacter1.y);
-				// animation para volver a su sitio
-				// this.playCharacter1.play('player1_attack_1_reverse');
-			} else if (animation.key == 'player1_attack_1_reverse') {
-				// y quitarle la velocidad
-				this.playCharacter1.setVelocityX(0);
+			if (animation.key == 'player1_attack_1') {
+				// CHENZEN 'FRAPPE FANTOME'
+				if (this.player1 == 1) {
+					this.playCharacter1.setVelocityX(0);
+					this.playCharacter1.setPosition(460, this.playCharacter1.y);
+				}
+				// ALCAPOTE 'INJURE' _injure
+				if (this.player1 == 4) {
+					this.lempereur1_injure.setVelocityX(0);
+					this.lempereur1_injure.setPosition(950, 500);
+					this.lempereur1_injure.setVisible(false);
+				}
+			}
+			// if (animation.key == 'player1_attack_1_reverse') {
+			// 	// y quitarle la velocidad
+			// 	this.playCharacter1.setVelocityX(0);
+			// }
+			if (animation.key == 'player1_attack_3') {
+				// MANNY 'VOLE PELICAN' _bird
+				if (this.player1 == 3) {
+					this.manny1_bird.setVisible(false);
+					this.manny1_bird.setVelocityX(0);
+					this.manny1_bird.setPosition(910, 500);
+					this.playCharacter2.play('player2_hurt');
+				}
+				// ALCAPOTE 'SUPER LANCER' _sword
+				if (this.player1 == 4) {
+					this.lempereur1_sword.setVelocityX(0);
+					this.lempereur1_sword.setPosition(910, 500);
+					this.lempereur1_sword.setVisible(false);
+					this.playCharacter2.play('player2_hurt');
+				}
+				// arranca hurt animation player2
 			}
 			// this.enemy.play('lempereur_hurt');
 		});
 
-		// SOUNDS player 02
+		// PLAYER 2 ANIMATIONS START ############################
 		this.playCharacter2.on('animationstart', (animation) => {
 			console.log('animation start P2');
 			// console.log(animation);
 			if (animation.key == 'player2_start') {
 				this.fx_p2_start.play();
-			} else if (animation.key == 'player2_attack_1' && this.player2 == 1) {
-				this.playCharacter2.setVelocityX(-600);
+			} else if (animation.key == 'player2_attack_1') {
 				this.fx_p2_atk_1.play();
-			} else if (animation.key == 'player2_attack_1' && this.player2 != 1) {
-				this.fx_p2_atk_1.play();
+				// CHENZEN 'FRAPPE FANTOME'
+				if (this.player2 == 1) {
+					this.playCharacter2.setVelocityX(-600);
+					this.fx_p2_atk_1.play();
+				}
+				// ALCAPOTE 'INJURE' _injure
+				if (this.player2 == 4) {
+					this.timedEvent = this.time.addEvent({
+						delay: 300,
+						callback: () => {
+							this.lempereur2_injure.setVisible(true);
+							this.lempereur2_injure.setVelocityX(-800);
+						},
+					});
+				}
 			} else if (animation.key == 'player2_attack_2') {
 				this.fx_p2_atk_2.play();
 			} else if (animation.key == 'player2_attack_3') {
 				this.fx_p2_atk_3.play();
+				// MANNY 'VOLE PELICAN' _bird
+				if (this.player2 == 3) {
+					this.timedEvent = this.time.addEvent({
+						delay: 800,
+						callback: () => {
+							this.manny2_bird.setVisible(true);
+							this.manny2_bird.setVelocityX(-800);
+						},
+					});
+				}
+				// ALCAPOTE 'SUPER LANCER' _sword
+				if (this.player2 == 4) {
+					this.timedEvent = this.time.addEvent({
+						delay: 1000,
+						callback: () => {
+							this.lempereur2_sword.setVisible(true);
+							this.lempereur2_sword.setVelocityX(-1100);
+						},
+					});
+				}
 			} else if (animation.key == 'player2_deffense_1') {
 				this.fx_p2_deffense_1.play();
 			}
 
 			// play sound animation
 		});
+		// PLAYER 2 ANIMATIONS COMPLETE ################################
 		this.playCharacter2.on('animationcomplete', (animation) => {
 			console.log('animation finish P2');
-			if (animation.key == 'player2_attack_1' && this.player2 == 1) {
-				this.playCharacter2.setVelocityX(0);
-				this.playCharacter2.setPosition(1360, this.playCharacter2.y);
-				// animation para volver a su sitio
-				// this.playCharacter1.play('player1_attack_1_reverse');
-			} else if (animation.key == 'player2_attack_1_reverse') {
-				// y quitarle la velocidad
-				this.playCharacter2.setVelocityX(0);
+			if (animation.key == 'player2_attack_1') {
+				if (this.player2 == 1) {
+					this.playCharacter2.setVelocityX(0);
+					this.playCharacter2.setPosition(1360, this.playCharacter2.y);
+				}
+				if (this.player2 == 4) {
+					this.lempereur2_injure.setVisible(false);
+					this.lempereur2_injure.setVelocityX(0);
+					this.lempereur2_injure.setPosition(980, 500);
+				}
+			}
+			// else if (animation.key == 'player2_attack_1_reverse') {
+			// 	// y quitarle la velocidad
+			// 	this.playCharacter2.setVelocityX(0);
+			// }
+			if (animation.key == 'player2_attack_3') {
+				if (this.player2 == 3) {
+					this.manny2_bird.setVisible(false);
+					this.manny2_bird.setVelocityX(0);
+					this.manny2_bird.setPosition(910, 500);
+					this.playCharacter1.play('player1_hurt');
+				}
+				if (this.player2 == 4) {
+					this.lempereur2_sword.setVelocityX(0);
+					this.lempereur2_sword.setPosition(880, 500);
+					this.lempereur2_sword.setVisible(false);
+					this.playCharacter1.play('player1_hurt');
+				}
+				// arranca hurt animation player2
 			}
 			// this.enemy.play('lempereur_hurt');
 		});
@@ -745,6 +567,338 @@ export class Battle extends Phaser.Scene {
 				this.playCharacter2.play('player2_start');
 			},
 		});
+	}
+	createMicros() {
+		/** ##### others elements */
+		this.micro1 = this.add.image(700, -500, 'micro1');
+		this.micro2 = this.add.image(1200, -700, 'micro2');
+		this.micro1.setDataEnabled();
+		this.micro1.data.set('position', 'down');
+		this.micro2.setDataEnabled();
+		this.micro2.data.set('position', 'down');
+	}
+	createProgressBars() {
+		/** ###### progress bars top */
+		this.navbarPowerP1 = this.add.image(360, 60, 'navbarPower'); //navbarPower
+		this.navbarPowerP2 = this.add.image(1550, 60, 'navbarPower'); //navbarPower
+		// NAMES rappers
+		this.add.text(32, 32, this.player1Name, {
+			fontSize: '20px',
+			fill: '#000000',
+			fontFamily: 'Public Pixel, verdana, arial, sans-serif',
+		});
+		this.add.text(1226, 32, this.player2Name, {
+			fontSize: '20px',
+			fill: '#000000',
+			fontFamily: 'Public Pixel, verdana, arial, sans-serif',
+		});
+		// PROGRESS BARS
+		this.p1PowerText = this.add.text(600, 65, '', {
+			fontSize: '20px',
+			fill: '#000',
+			fontFamily: 'verdana, arial, sans-serif',
+		});
+		this.p2PowerText = this.add.text(1790, 65, '', {
+			fontSize: '20px',
+			fill: '#000',
+			fontFamily: 'verdana, arial, sans-serif',
+		});
+		// the progress bar and update text of power/500
+		this.progressbarsPowerMaker();
+
+		/* ##### nav bar menu Down */
+		this.navbarDown = this.add.image(960, 870, 'navbarDown'); //navbarPower
+		// textos iniciales
+		this.p1TextAction = this.add.text(550, 800, 'UHMM!', {
+			fontSize: '20px',
+			fill: '#000000',
+			fontFamily: 'verdana, arial, sans-serif',
+		});
+		this.p2TextAction = this.add.text(980, 800, 'Cop Cop!', {
+			fontSize: '20px',
+			fill: '#000000',
+			fontFamily: 'verdana, arial, sans-serif',
+		});
+	}
+	createMenuInitP1() {
+		// MENUINIT P1 ######################################
+		this.menuP1Init = this.add.container(0, 0);
+
+		this.btnAttack = this.add.sprite(20, 792, 'buttonAttack').setOrigin(0, 0).setInteractive();
+		this.btnDefense = this.add.sprite(20, 844, 'buttonDefense').setOrigin(0, 0).setInteractive();
+		this.btnGiveup = this.add.sprite(20, 896, 'buttonGiveup').setOrigin(0, 0).setInteractive(); // .setInteractive(true)
+		this.menuP1Init.add([this.btnAttack, this.btnDefense, this.btnGiveup]);
+
+		this.menuP1Init.setVisible(false);
+		let items = this.menuP1Init.list;
+		items.map((item) => {
+			item.on('pointerover', function (event) {
+				// console.log('over');
+				this.setTint(0xcacaca);
+			});
+			item.on('pointerout', function (event) {
+				// console.log('out');
+				this.setTint(0xffffff);
+			});
+		});
+
+		this.btnAttack.on(
+			'pointerup',
+			function (pointer) {
+				// DEBUG console.log(pointer);
+				if (this.turn == 1) {
+					this.soundButtonClick.play();
+					// ######## click BUTTON ATTACK ######
+					this.openMenuAttackP1();
+				}
+			},
+			this
+		);
+		this.btnDefense.on(
+			'pointerup',
+			function (pointer) {
+				// DEBUG console.log(pointer);
+				if (this.turn == 1) {
+					this.soundButtonClick.play();
+					// ######## click BUTTON ATTACK ######
+					this.openMenuDeffenseP1();
+				}
+			},
+			this
+		);
+		this.btnGiveup.on(
+			'pointerup',
+			function (pointer) {
+				this.soundButtonClick.play();
+				// ######## click BUTTON ATTACK ######
+				this.scene.start('Main');
+				// this.scene.stop('Battle');
+			},
+			this
+		);
+		// MENUINIT P1 ######################################
+	}
+	createMenuAttackP1() {
+		// MENUATTACK P1 ####################################
+		this.menuP1Attack = this.add.container(0, 0);
+
+		this.btnAttackA = this.add.sprite(20, 792, `btn_${this.player1}_atk_a`).setOrigin(0, 0).setInteractive();
+		this.btnAttackB = this.add.sprite(268, 792, `btn_${this.player1}_atk_b`).setOrigin(0, 0).setInteractive(); // .setInteractive(true)
+		this.btnAttackC = this.add.sprite(20, 844, `btn_${this.player1}_atk_c`).setOrigin(0, 0).setInteractive();
+		// texto de los botones
+
+		// this.btnAttackD = this.add.sprite(268, 844, 'buttonAttackD').setOrigin(0, 0).setInteractive(); // .setInteractive(true)
+		this.btnAttackBack = this.add.sprite(20, 896, 'buttonAttackBack').setOrigin(0, 0).setInteractive(); // .setInteractive(true)
+		this.menuP1Attack.add([this.btnAttackA, this.btnAttackB, this.btnAttackC, this.btnAttackBack]);
+
+		this.menuP1Attack.setVisible(false);
+		let items2 = this.menuP1Attack.list;
+		items2.map((item) => {
+			item.on('pointerover', function (event) {
+				// console.log('over');
+				this.setTint(0xcacaca);
+			});
+			item.on('pointerout', function (event) {
+				// console.log('out');
+				this.setTint(0xffffff);
+			});
+		});
+
+		this.btnAttackA.on(
+			'pointerup',
+			function (pointer) {
+				// DEBUG console.log(pointer);
+				if (this.turn == 1) {
+					// this.panelLogoLeft.setVisible(true);
+					this.soundButtonClick.play();
+					// ######## click BUTTON ATTACK ######
+					console.log('attack A');
+					let delay = this.actionDelayPlayer1[1];
+					this.attackP1Selected('A', delay);
+				}
+			},
+			this
+		);
+		this.btnAttackB.on(
+			'pointerup',
+			function (pointer) {
+				// DEBUG console.log(pointer);
+				if (this.turn == 1) {
+					// this.panelLogoLeft.setVisible(true);
+					this.soundButtonClick.play();
+					// ######## click BUTTON ATTACK ######
+					console.log('attack B');
+					let delay = this.actionDelayPlayer1[2];
+					this.attackP1Selected('B', delay);
+				}
+			},
+			this
+		);
+		this.btnAttackC.on(
+			'pointerup',
+			function (pointer) {
+				// DEBUG console.log(pointer);
+				if (this.turn == 1) {
+					// this.panelLogoLeft.setVisible(true);
+					this.soundButtonClick.play();
+					// ######## click BUTTON ATTACK ######
+					console.log('attack C');
+					let delay = this.actionDelayPlayer1[3];
+					this.attackP1Selected('C', delay);
+				}
+			},
+			this
+		);
+		// this.btnAttackD.on(
+		// 	'pointerup',
+		// 	function (pointer) {
+		// 		// DEBUG console.log(pointer);
+		// 		if (this.turn == 1) {
+		// 			this.soundButtonClick.play();
+		// 			// ######## click BUTTON ATTACK ######
+		// 			console.log('attack D');
+		// 			let delay = this.actionDelayPlayer1[4];
+		// 			this.attackP1Selected('D', delay);
+		// 		}
+		// 	},
+		// 	this
+		// );
+		this.btnAttackBack.on(
+			'pointerup',
+			function (pointer) {
+				if (this.turn == 1) {
+					this.soundButtonClick.play();
+					console.log('attack go back');
+					this.menuP1Attack.setVisible(false);
+					this.menuP1Deffense.setVisible(false);
+					this.panelInactionLeft.setVisible(false);
+					this.menuP1Init.setVisible(true);
+				}
+			},
+			this
+		);
+		// MENUATTACK P1 ####################################
+	}
+	createMenuDeffenseP1() {
+		// MENUDEFENSE P1 ###################################
+		this.menuP1Deffense = this.add.container(0, 0);
+
+		this.btnDeffenseA = this.add.sprite(20, 792, `btn_${this.player1}_def_a`).setOrigin(0, 0).setInteractive();
+		// this.btnDeffenseB = this.add.sprite(20, 844, 'buttonAttackB').setOrigin(0, 0).setInteractive();
+		// this.btnDeffenseC = this.add.sprite(268, 792, 'buttonAttackC').setOrigin(0, 0).setInteractive(); // .setInteractive(true)
+		// this.btnDeffenseD = this.add.sprite(268, 844, 'buttonAttackD').setOrigin(0, 0).setInteractive(); // .setInteractive(true)
+		// texto de los botones
+
+		this.btnDeffenseBack = this.add.sprite(20, 896, 'buttonAttackBack').setOrigin(0, 0).setInteractive(); // .setInteractive(true)
+		this.menuP1Deffense.add([
+			this.btnDeffenseA,
+			// this.btnDeffenseB,
+			// this.btnDeffenseC,
+			// this.btnDeffenseD,
+			this.btnDeffenseBack,
+		]);
+
+		this.menuP1Deffense.setVisible(false);
+		let items3 = this.menuP1Deffense.list;
+		items3.map((item) => {
+			item.on('pointerover', function (event) {
+				// console.log('over');
+				this.setTint(0xcacaca);
+			});
+			item.on('pointerout', function (event) {
+				// console.log('out');
+				this.setTint(0xffffff);
+			});
+		});
+
+		this.btnDeffenseA.on(
+			'pointerup',
+			function (pointer) {
+				// DEBUG console.log(pointer);
+				if (this.turn == 1) {
+					// this.panelLogoLeft.setVisible(true);
+					this.soundButtonClick.play();
+					// ######## click BUTTON ATTACK ######
+					console.log('deffense A');
+					let delay = this.actionDelayPlayer1[4];
+					this.deffenseP1Selected('A', delay);
+				}
+			},
+			this
+		);
+		// this.btnDeffenseB.on(
+		// 	'pointerup',
+		// 	function (pointer) {
+		// 		// DEBUG console.log(pointer);
+		// 		if (this.turn == 1) {
+		// 			this.soundButtonClick.play();
+		// 			// ######## click BUTTON ATTACK ######
+		// 			console.log('deffense B');
+		// 			let delay = this.actionDelayPlayer1[6];
+		// 			this.deffenseP1Selected('B', delay);
+		// 		}
+		// 	},
+		// 	this
+		// );
+		// this.btnDeffenseC.on(
+		// 	'pointerup',
+		// 	function (pointer) {
+		// 		// DEBUG console.log(pointer);
+		// 		if (this.turn == 1) {
+		// 			this.soundButtonClick.play();
+		// 			// ######## click BUTTON ATTACK ######
+		// 			console.log('deffense C');
+		// 			let delay = this.actionDelayPlayer1[7];
+		// 			this.deffenseP1Selected('C', delay);
+		// 		}
+		// 	},
+		// 	this
+		// );
+		// this.btnDeffenseD.on(
+		// 	'pointerup',
+		// 	function (pointer) {
+		// 		// DEBUG console.log(pointer);
+		// 		if (this.turn == 1) {
+		// 			this.soundButtonClick.play();
+		// 			// ######## click BUTTON ATTACK ######
+		// 			console.log('deffense D');
+		// 			let delay = this.actionDelayPlayer1[8];
+		// 			this.deffenseP1Selected('D', delay);
+		// 		}
+		// 	},
+		// 	this
+		// );
+		this.btnDeffenseBack.on(
+			'pointerup',
+			function (pointer) {
+				if (this.turn == 1) {
+					this.soundButtonClick.play();
+					console.log('attack go back');
+					this.menuP1Attack.setVisible(false);
+					this.menuP1Deffense.setVisible(false);
+					this.menuP1Init.setVisible(true);
+				}
+			},
+			this
+		);
+		// MENUDEFENSE P1 ###################################
+	}
+	createMenuEnemy() {
+		// MENU ENENMY ##########################################################
+		this.menuP2 = this.add.group();
+		this.btn_p2_attack = this.add.sprite(1400, 792, 'buttonAttack').setOrigin(0, 0);
+		this.btn_p2_deffense = this.add.sprite(1400, 844, 'buttonDefense').setOrigin(0, 0);
+
+		this.menuP2.add(this.btn_p2_attack);
+		this.menuP2.add(this.btn_p2_deffense);
+		// MENU ENENMY ##########################################################
+		// PANELS TURN1 TURN2
+		this.panelLogoLeft = this.add.image(480, 870, 'panelTurn2').setVisible(false);
+		this.panelLogoRight = this.add.image(1440, 870, 'panelTurn1').setVisible(false);
+		this.panelInactionLeft = this.add.image(480, 870, 'panelInAction1').setVisible(false);
+		this.panelInactionRight = this.add.image(480, 870, 'panelInAction2').setVisible(false);
+		// PANELS TURN1 TURN2
+		// MENU ENENMY ##########################################################
 	}
 	// BATTLE MENUS ######################
 	progressbarsPowerMaker() {
@@ -882,7 +1036,7 @@ export class Battle extends Phaser.Scene {
 		console.log('turno 2');
 		// randomixe attack or defense
 		let attacktype = Phaser.Math.Between(1, 4);
-		let delay = this.musicDelaysEnemy[attacktype];
+		let delay = this.actionDelayPlayer2[attacktype];
 		this.optionP2Selected(attacktype, delay);
 	}
 	deffenseP1Selected(deffensetype, delay) {
@@ -1084,7 +1238,7 @@ export class Battle extends Phaser.Scene {
 	}
 	gameOver(winner = false) {
 		// MOSTRAR TESTOS DE GANADOR O PERDEDOR ANTES DE IR A LA ESCENA
-		if (winner == true || winner == false) {
+		if (winner == true) {
 			this.scene.start('Win', { player1: this.player1, player1Xp: this.p1Xp });
 		} else {
 			this.scene.start('Gameover', { player1: this.player1, player1Xp: this.p1Xp });
